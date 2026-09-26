@@ -5,7 +5,7 @@ name: devsnipe-fetch
 on:
   push:
     branches: [claude/beautiful-mccarthy-d1pizl]
-    paths: ['devsnipe/fetch/**', '.github/workflows/devsnipe-fetch.yml']
+    paths: ['devsnipe/fetch/**', '!devsnipe/fetch/metadata.mjs', '.github/workflows/devsnipe-fetch.yml']
   workflow_dispatch:
 
 permissions:
@@ -51,7 +51,8 @@ jobs:
 
   commit:
     needs: fetch
-    if: always()
+    # a timed-out fetch still commits its partial data; a cancelled run commits nothing
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
