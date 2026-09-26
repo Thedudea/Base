@@ -28,8 +28,8 @@ const overBudget = () => Date.now() - T0 > BUDGET_MS;
 
 const CANDIDATES = [
   ...(process.env.RPC_URLS || '').split(',').filter(Boolean).map((url) => ({ url, rps: 20 })),
-  { url: 'https://api.mainnet-beta.solana.com', rps: 3.5 },
-  { url: 'https://solana-rpc.publicnode.com', rps: 6 },
+  { url: 'https://api.mainnet-beta.solana.com', rps: 2 },
+  { url: 'https://solana-rpc.publicnode.com', rps: 12 },
   { url: 'https://solana.drpc.org', rps: 4 },
   { url: 'https://solana.api.onfinality.io/public', rps: 3 },
   { url: 'https://rpc.ankr.com/solana', rps: 4 },
@@ -153,7 +153,7 @@ async function probe() {
       res.getSigs = { status: s.status, n: s.j && Array.isArray(s.j.result) ? s.j.result.length : null, err: s.j && s.j.error };
       if (s.j && Array.isArray(s.j.result) && s.j.result.length) {
         const sig = s.j.result[s.j.result.length - 1].signature;
-        const tx = await rawCall(ep, 'getTransaction', [sig, { encoding: 'json', maxSupportedTransactionVersion: 0 }], 15000);
+        const tx = await rawCall(ep, 'getTransaction', [sig, { encoding: 'json', maxSupportedTransactionVersion: 1 }], 15000);
         res.getTx = { status: tx.status, ok: !!(tx.j && tx.j.result), err: tx.j && tx.j.error };
       }
     } catch (e) {
@@ -202,9 +202,20 @@ async function pool(items, n, fn) {
   return res;
 }
 
+let shapeLogged = false;
+function logShape(tx) {
+  if (shapeLogged || !tx || tx.version !== 1) return;
+  shapeLogged = true;
+  fs.writeFileSync(path.join(OUT, 'sample_v1_tx.json'), JSON.stringify(tx, null, 1));
+  log('v1 tx keys', Object.keys(tx), 'message keys', Object.keys(tx.transaction?.message || {}));
+}
+
 const getTx = (sig) =>
-  rpc('getTransaction', [sig, { encoding: 'json', maxSupportedTransactionVersion: 0, commitment: 'confirmed' }], {
+  rpc('getTransaction', [sig, { encoding: 'json', maxSupportedTransactionVersion: 1, commitment: 'confirmed' }], {
     nullMeansMissing: true,
+  }).then((tx) => {
+    logShape(tx);
+    return tx;
   });
 
 function writeJsonlGz(file, rows) {
@@ -282,7 +293,7 @@ async function main() {
   const CHUNK = 100;
   for (let i = 0; i < okSigs.length; i += CHUNK) {
     const chunk = okSigs.slice(i, i + CHUNK);
-    const txs = await pool(chunk, 6, (s) => getTx(s.signature));
+    const txs = await pool(chunk, 10, (s) => getTx(s.signature));
     for (const [k, tx] of txs.entries()) {
       if (!tx) txs[k] = await getTx(chunk[k].signature); // one slow retry
     }
@@ -292,7 +303,12 @@ async function main() {
         return;
       }
       devTxs.push(tx);
-      const c = creationInfo(tx);
+      let c = null;
+      try {
+        c = creationInfo(tx);
+      } catch (e) {
+        meta.errors.push(`creationInfo ${chunk[k].signature}: ${e.message}`);
+      }
       if (c) creations.push(c);
     });
     log(`dev txs ${devTxs.length}/${okSigs.length} creations ${creations.length}`);
@@ -315,7 +331,7 @@ async function main() {
     const window = chron.slice(0, cfg.maxMintTxs);
     const txs = await pool(
       window.filter((s) => !s.err),
-      6,
+      10,
       (s) => getTx(s.signature),
     );
     const okWindow = window.filter((s) => !s.err);
@@ -331,7 +347,7 @@ async function main() {
       try {
         const b = await rpc(
           'getBlock',
-          [slot, { transactionDetails: 'signatures', rewards: false, maxSupportedTransactionVersion: 0, commitment: 'confirmed' }],
+          [slot, { transactionDetails: 'signatures', rewards: false, maxSupportedTransactionVersion: 1, commitment: 'confirmed' }],
           { tries: 4 },
         );
         if (!b) continue;
@@ -358,6 +374,7 @@ async function main() {
     }
     meta.mints.push({ mint: c.mint, sigs: sigs.length, txs: got.length, missing: window.filter((s) => !s.err).length - got.length });
     log(`mint ${n + 1}/${targets.length} ${c.mint} sigs=${sigs.length} txs=${got.length}`);
+    fs.writeFileSync(path.join(OUT, 'meta.json'), JSON.stringify({ ...meta, errLog }, null, 1));
   }
 
   meta.finishedAt = new Date().toISOString();

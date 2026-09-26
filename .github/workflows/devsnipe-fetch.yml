@@ -18,7 +18,7 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 200
+    timeout-minutes: 100
     strategy:
       fail-fast: false
       matrix:
