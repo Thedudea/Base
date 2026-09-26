@@ -1,7 +1,6 @@
 {
   "devs": [
-    "8NJ7Ujpji8uMF2675mqaTSEm2DCbfJA7fiRKtiaqkaLN",
-    "AufH68UFBGSVVRL9D7u5W6NySCrukL4fWfSRTxDcJC6u"
+    "bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa"
   ],
   "maxDevSigs": 3000,
   "maxTokens": 45,
@@ -10,5 +9,5 @@
   "blockSlotsAfterCreate": 3,
   "maxMintSlots": 900,
   "timeBudgetMin": 75,
-  "runTag": "v3"
+  "runTag": "v4-bwam"
 }

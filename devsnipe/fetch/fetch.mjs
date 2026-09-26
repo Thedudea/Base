@@ -17,6 +17,7 @@ const OUT = process.argv[3] || `out/${DEV}`;
 const T0 = Date.now();
 const BUDGET_MS = cfg.timeBudgetMin * 60_000;
 const WSOL = 'So11111111111111111111111111111111111111112';
+const PUMP = '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';
 
 fs.mkdirSync(path.join(OUT, 'mints'), { recursive: true });
 
@@ -317,23 +318,66 @@ async function main() {
   writeJsonlGz(path.join(OUT, 'dev_txs.jsonl.gz'), devTxs);
   fs.writeFileSync(path.join(OUT, 'creations.json'), JSON.stringify(creations, null, 1));
 
+  // A wallet that trades rather than creates: study the pump.fun tokens it traded.
+  // untilSlot extends each token's window past the wallet's last trade on it.
+  let targets = creations.slice(0, cfg.maxTokens);
+  meta.mode = 'creator';
+  if (creations.length < 3) {
+    meta.mode = 'trader';
+    const traded = new Map();
+    for (const tx of devTxs) {
+      if (!tx.meta || tx.meta.err) continue;
+      const keys = accountKeys(tx);
+      if (!keys.includes(PUMP)) continue;
+      for (const b of [...(tx.meta.preTokenBalances || []), ...(tx.meta.postTokenBalances || [])]) {
+        if (b.owner !== DEV || b.mint === WSOL) continue;
+        const t = traded.get(b.mint) || { mint: b.mint, trader: true, lastSlot: 0, n: 0 };
+        t.lastSlot = Math.max(t.lastSlot, tx.slot);
+        t.n++;
+        traded.set(b.mint, t);
+      }
+    }
+    targets = [...traded.values()].sort((a, b) => b.lastSlot - a.lastSlot).slice(0, cfg.maxTokens);
+    fs.writeFileSync(path.join(OUT, 'traded_mints.json'), JSON.stringify(targets, null, 1));
+    log(`trader mode: ${traded.size} traded mints, studying ${targets.length}`);
+  }
+
   // 3. per-mint history, newest token first
-  const targets = creations.slice(0, cfg.maxTokens);
   meta.mints = [];
-  for (const [n, c] of targets.entries()) {
+  for (const [n, target] of targets.entries()) {
     if (overBudget()) {
       meta.errors.push(`time budget hit after ${n} mints`);
       break;
     }
-    const sigs = await allSigs(c.mint, cfg.maxMintSigs);
+    const sigs = await allSigs(target.mint, cfg.maxMintSigs);
     // oldest first; the first maxMintTxs *successful* txs within maxMintSlots of the
     // create (early slots are ~90% failed bot txs, which only need their signatures)
     const chron = [...sigs].reverse();
+    let c = target;
+    let maxSlots = cfg.maxMintSlots;
+    let maxTxs = cfg.maxMintTxs;
+    if (target.trader) {
+      // the oldest signature of a pump.fun mint is its create tx
+      const first = chron[0] && (await getTx(chron[0].signature));
+      const ci = first && first.meta && !first.meta.err && first.meta.logMessages.some((l) => /InitializeMint/.test(l));
+      c = { mint: target.mint, slot: chron[0] ? chron[0].slot : 0, blockTime: chron[0] && chron[0].blockTime,
+            signature: chron[0] && chron[0].signature, programs: [], signers: first ? accountKeys(first).slice(0, first.transaction.message.header.numRequiredSignatures) : [],
+            createSeen: !!ci, truncatedStart: sigs.length >= cfg.maxMintSigs };
+      maxSlots = Math.min(Math.max(cfg.maxMintSlots, target.lastSlot - c.slot + 150), 20000);
+      maxTxs = cfg.maxMintTxs * 2;
+    }
     const window = [];
     for (const s of chron) {
-      if (s.slot - c.slot > cfg.maxMintSlots) break;
+      if (s.slot - c.slot > maxSlots) break;
       window.push(s);
-      if (window.filter((x) => !x.err).length >= cfg.maxMintTxs) break;
+      if (window.filter((x) => !x.err).length >= maxTxs) break;
+    }
+    // always include the studied wallet's own txs on this mint
+    const devOnMint = devTxs.filter((tx) => tx.meta && !tx.meta.err && (tx.meta.postTokenBalances || []).some((b) => b.mint === c.mint && b.owner === DEV));
+    const inWin = new Set(window.map((s) => s.signature));
+    for (const tx of devOnMint) {
+      const sig = tx.transaction.signatures[0];
+      if (!inWin.has(sig)) window.push({ signature: sig, slot: tx.slot, err: null, blockTime: tx.blockTime });
     }
     const okWindow = window.filter((s) => !s.err);
     const txs = await pool(okWindow, 10, (s) => getTx(s.signature));
@@ -370,7 +414,7 @@ async function main() {
         totalSigs: sigs.length,
         truncated: sigs.length >= cfg.maxMintSigs,
         windowSlots: window.length ? window[window.length - 1].slot - c.slot : 0,
-        sigs: chron.filter((s) => s.slot - c.slot <= Math.max(cfg.maxMintSlots, 50)),
+        sigs: [...chron.filter((s) => s.slot - c.slot <= Math.max(maxSlots, 50)), ...window.filter((s) => s.slot - c.slot > Math.max(maxSlots, 50))],
         blockIdx,
       }),
     );

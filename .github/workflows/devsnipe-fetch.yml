@@ -16,15 +16,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      devs: ${{ steps.cfg.outputs.devs }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: cfg
+        run: echo "devs=$(node -p "JSON.stringify(require('./devsnipe/fetch/config.json').devs)")" >> "$GITHUB_OUTPUT"
+
   fetch:
+    needs: setup
     runs-on: ubuntu-latest
     timeout-minutes: 100
     strategy:
       fail-fast: false
       matrix:
-        dev:
-          - 8NJ7Ujpji8uMF2675mqaTSEm2DCbfJA7fiRKtiaqkaLN
-          - AufH68UFBGSVVRL9D7u5W6NySCrukL4fWfSRTxDcJC6u
+        dev: ${{ fromJSON(needs.setup.outputs.devs) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
