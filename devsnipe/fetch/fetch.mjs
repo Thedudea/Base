@@ -44,6 +44,8 @@ class Endpoint {
     this.bad = new Set(); // methods this endpoint cannot serve
     this.ok = 0;
     this.err = 0;
+    this.hardErr = {};
+    this.okBy = {};
   }
 }
 
@@ -66,56 +68,59 @@ async function rawCall(ep, method, params, timeout = 30000) {
   return { status: r.status, j, text: text.slice(0, 300) };
 }
 
+const errLog = {}; // "url method" -> first messages seen
+function noteErr(ep, method, msg) {
+  const k = `${ep.url} ${method}`;
+  const arr = (errLog[k] ||= []);
+  if (arr.length < 15 && !arr.includes(msg)) {
+    arr.push(msg);
+    log('rpc error', k, msg);
+  }
+}
+
 // nullMeansMissing: getTransaction returns null when a node lacks history, so
 // try another endpoint before trusting the null.
-async function rpc(method, params, { nullMeansMissing = false, tries = 10 } = {}) {
+async function rpc(method, params, { nullMeansMissing = false, tries = 12 } = {}) {
   const triedNull = new Set();
   let lastErr;
   for (let attempt = 0; attempt < tries; attempt++) {
     const candidates = endpoints.filter((e) => !e.bad.has(method) && !triedNull.has(e));
-    if (!candidates.length) return null;
+    if (!candidates.length) break;
     candidates.sort((a, b) => a.next - b.next);
     const ep = candidates[0];
     const now = Date.now();
     const wait = Math.max(0, ep.next - now);
     ep.next = Math.max(now, ep.next) + ep.interval;
     if (wait) await sleep(wait);
+    ep.hardErr[method] ||= 0;
+    ep.okBy[method] ||= 0;
     try {
       const { status, j, text } = await rawCall(ep, method, params);
+      const em = j && j.error ? `${j.error.code} ${j.error.message}` : null;
       if (status === 429 || (j && j.error && (j.error.code === 429 || /rate|too many/i.test(j.error.message)))) {
-        ep.interval = Math.min(ep.interval * 1.6, 8000);
-        ep.next = Date.now() + 1500 * (attempt + 1);
+        ep.interval = Math.min(ep.interval * 1.5, 6000);
+        ep.next = Date.now() + 1000 * Math.min(attempt + 1, 6);
         ep.err++;
-        lastErr = `429 ${ep.url}`;
+        lastErr = `429 ${ep.url} ${em || text}`;
+        noteErr(ep, method, `429 ${(em || text).slice(0, 120)}`);
         continue;
       }
-      if (status >= 500 || !j) {
+      if (status !== 200 || !j || j.error) {
         ep.err++;
-        ep.next = Date.now() + 1000 * (attempt + 1);
-        lastErr = `${status} ${ep.url} ${text}`;
-        if (ep.err > 50 && ep.ok < ep.err / 5) ep.bad.add(method);
-        continue;
-      }
-      if (j.error) {
-        const m = j.error.message || '';
-        ep.err++;
-        lastErr = `${ep.url} ${j.error.code} ${m}`;
-        // method not supported / history not available on this node / auth
-        if (
-          j.error.code === -32601 ||
-          j.error.code === -32009 ||
-          j.error.code === -32007 ||
-          j.error.code === -32004 ||
-          j.error.code === -32011 ||
-          status === 401 ||
-          status === 403 ||
-          /not (found|available|supported)|disabled|api key|unauthor|forbidden|long-term storage/i.test(m)
-        ) {
+        ep.hardErr[method]++;
+        lastErr = `${ep.url} http=${status} ${em || text}`;
+        noteErr(ep, method, `http=${status} ${(em || text).slice(0, 200)}`);
+        ep.next = Date.now() + 500 * Math.min(attempt + 1, 6);
+        // only give up on an endpoint for a method once it clearly cannot serve it
+        const code = j && j.error && j.error.code;
+        if (code === -32601 || (ep.hardErr[method] >= 12 && ep.okBy[method] < ep.hardErr[method] / 10)) {
           ep.bad.add(method);
+          log(`endpoint ${ep.url} disabled for ${method}`);
         }
         continue;
       }
       ep.ok++;
+      ep.okBy[method]++;
       ep.interval = Math.max(ep.minInterval, ep.interval * 0.97);
       if (j.result === null && nullMeansMissing) {
         triedNull.add(ep);
@@ -125,7 +130,8 @@ async function rpc(method, params, { nullMeansMissing = false, tries = 10 } = {}
     } catch (e) {
       ep.err++;
       lastErr = `${ep.url} ${e.message}`;
-      ep.next = Date.now() + 1000 * (attempt + 1);
+      noteErr(ep, method, `exception ${e.message}`);
+      ep.next = Date.now() + 1000 * Math.min(attempt + 1, 6);
     }
   }
   if (nullMeansMissing) return null;
@@ -277,6 +283,9 @@ async function main() {
   for (let i = 0; i < okSigs.length; i += CHUNK) {
     const chunk = okSigs.slice(i, i + CHUNK);
     const txs = await pool(chunk, 6, (s) => getTx(s.signature));
+    for (const [k, tx] of txs.entries()) {
+      if (!tx) txs[k] = await getTx(chunk[k].signature); // one slow retry
+    }
     txs.forEach((tx, k) => {
       if (!tx) {
         meta.errors.push(`dev tx missing ${chunk[k].signature}`);
@@ -309,6 +318,10 @@ async function main() {
       6,
       (s) => getTx(s.signature),
     );
+    const okWindow = window.filter((s) => !s.err);
+    for (const [k, tx] of txs.entries()) {
+      if (!tx) txs[k] = await getTx(okWindow[k].signature);
+    }
     const got = txs.filter(Boolean);
 
     // tx ordering inside the first blocks: fetch block signature lists
@@ -348,13 +361,14 @@ async function main() {
   }
 
   meta.finishedAt = new Date().toISOString();
-  meta.endpointStats = endpoints.map((e) => ({ url: e.url, ok: e.ok, err: e.err, bad: [...e.bad], interval: e.interval }));
+  meta.endpointStats = endpoints.map((e) => ({ url: e.url, ok: e.ok, err: e.err, okBy: e.okBy, hardErr: e.hardErr, bad: [...e.bad], interval: e.interval }));
+  meta.errLog = errLog;
   fs.writeFileSync(path.join(OUT, 'meta.json'), JSON.stringify(meta, null, 1));
   log('done', meta.endpointStats);
 }
 
 main().catch((e) => {
-  console.error(e);
+  console.error(e, errLog);
   fs.writeFileSync(path.join(OUT, 'fatal.txt'), String(e.stack || e));
   process.exit(1);
 });
