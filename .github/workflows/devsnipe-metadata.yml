@@ -1,0 +1,32 @@
+name: devsnipe-metadata
+
+# Fetches token metadata JSON for the dev in devsnipe/fetch/config.json from
+# already-committed data and commits it next to that data.
+on:
+  push:
+    branches: [claude/beautiful-mccarthy-d1pizl]
+    paths: ['devsnipe/fetch/metadata.mjs', '.github/workflows/devsnipe-metadata.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch metadata
+        run: |
+          tag=$(node -p "require('./devsnipe/fetch/config.json').runTag")
+          for dev in $(node -p "require('./devsnipe/fetch/config.json').devs.join(' ')"); do
+            node devsnipe/fetch/metadata.mjs "devsnipe/data/$tag/$dev"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add devsnipe/data
+          git commit -m "devsnipe: token metadata ($tag)" || exit 0
+          for i in 1 2 3; do git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME" && break; sleep 5; done
