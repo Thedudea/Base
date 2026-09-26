@@ -5,9 +5,10 @@
   ],
   "maxDevSigs": 3000,
   "maxTokens": 45,
-  "maxMintSigs": 4000,
-  "maxMintTxs": 300,
+  "maxMintSigs": 12000,
+  "maxMintTxs": 400,
   "blockSlotsAfterCreate": 3,
-  "timeBudgetMin": 70,
-  "runTag": "v2"
+  "maxMintSlots": 900,
+  "timeBudgetMin": 75,
+  "runTag": "v3"
 }

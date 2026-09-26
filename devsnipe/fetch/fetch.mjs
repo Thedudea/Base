@@ -326,15 +326,17 @@ async function main() {
       break;
     }
     const sigs = await allSigs(c.mint, cfg.maxMintSigs);
-    // oldest first; keep the earliest maxMintTxs successful ones plus failed ones in that window
+    // oldest first; the first maxMintTxs *successful* txs within maxMintSlots of the
+    // create (early slots are ~90% failed bot txs, which only need their signatures)
     const chron = [...sigs].reverse();
-    const window = chron.slice(0, cfg.maxMintTxs);
-    const txs = await pool(
-      window.filter((s) => !s.err),
-      10,
-      (s) => getTx(s.signature),
-    );
+    const window = [];
+    for (const s of chron) {
+      if (s.slot - c.slot > cfg.maxMintSlots) break;
+      window.push(s);
+      if (window.filter((x) => !x.err).length >= cfg.maxMintTxs) break;
+    }
     const okWindow = window.filter((s) => !s.err);
+    const txs = await pool(okWindow, 10, (s) => getTx(s.signature));
     for (const [k, tx] of txs.entries()) {
       if (!tx) txs[k] = await getTx(okWindow[k].signature);
     }
@@ -342,7 +344,7 @@ async function main() {
 
     // tx ordering inside the first blocks: fetch block signature lists
     const blockIdx = {};
-    const wanted = new Set(window.map((s) => s.signature));
+    const wanted = new Set(chron.filter((s) => s.slot - c.slot <= cfg.blockSlotsAfterCreate).map((s) => s.signature));
     for (let slot = c.slot; slot <= c.slot + cfg.blockSlotsAfterCreate; slot++) {
       try {
         const b = await rpc(
@@ -363,9 +365,22 @@ async function main() {
 
     fs.writeFileSync(
       path.join(OUT, 'mints', `${c.mint}.sigs.json`),
-      JSON.stringify({ creation: c, totalSigs: sigs.length, truncated: sigs.length >= cfg.maxMintSigs, sigs: chron, blockIdx }),
+      JSON.stringify({
+        creation: c,
+        totalSigs: sigs.length,
+        truncated: sigs.length >= cfg.maxMintSigs,
+        windowSlots: window.length ? window[window.length - 1].slot - c.slot : 0,
+        sigs: chron.filter((s) => s.slot - c.slot <= Math.max(cfg.maxMintSlots, 50)),
+        blockIdx,
+      }),
     );
     writeJsonlGz(path.join(OUT, 'mints', `${c.mint}.txs.jsonl.gz`), got);
+
+    if (n < 3) {
+      const failed = window.filter((s) => s.err).slice(0, 8);
+      const ftx = await pool(failed, 4, (s) => getTx(s.signature));
+      writeJsonlGz(path.join(OUT, 'mints', `${c.mint}.failed_sample.jsonl.gz`), ftx.filter(Boolean));
+    }
 
     let pfTrades = null;
     if (pf.status === 200) {
