@@ -3,8 +3,8 @@
   "url": "https://api.mainnet-beta.solana.com",
   "getSlot": {
    "status": 200,
-   "ms": 386,
-   "result": 450652577
+   "ms": 231,
+   "result": 450653135
   },
   "getSigs": {
    "status": 200,
@@ -19,8 +19,8 @@
   "url": "https://solana-rpc.publicnode.com",
   "getSlot": {
    "status": 200,
-   "ms": 139,
-   "result": 450652578
+   "ms": 65,
+   "result": 450653135
   },
   "getSigs": {
    "status": 200,
@@ -35,7 +35,7 @@
   "url": "https://solana.drpc.org",
   "getSlot": {
    "status": 400,
-   "ms": 72,
+   "ms": 170,
    "result": {
     "message": "chain is not available on free plan, please upgrade to paid plan",
     "code": 35
@@ -54,7 +54,7 @@
   "url": "https://solana.api.onfinality.io/public",
   "getSlot": {
    "status": 429,
-   "ms": 284,
+   "ms": 110,
    "result": {
     "code": -32029,
     "message": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit"
@@ -73,7 +73,7 @@
   "url": "https://rpc.ankr.com/solana",
   "getSlot": {
    "status": 403,
-   "ms": 349,
+   "ms": 249,
    "result": "message: API key is not allowed to access blockchain, json-rpc code: -32052, rest code: 403"
   },
   "getSigs": {

@@ -1,1 +1,1 @@
-{"status":404,"body":"{\"statusCode\":404,\"timestamp\":\"2026-09-26T10:50:26.399Z\",\"path\":\"/coins/user-created-coins/8NJ7Ujpji8uMF2675mqaTSEm2DCbfJA7fiRKtiaqkaLN?offset=0&limit=100&includeNsfw=true\",\"message\":\"Cannot GET /coin"}
+{"status":404,"body":"{\"statusCode\":404,\"timestamp\":\"2026-09-26T10:52:53.862Z\",\"path\":\"/coins/user-created-coins/8NJ7Ujpji8uMF2675mqaTSEm2DCbfJA7fiRKtiaqkaLN?offset=0&limit=100&includeNsfw=true\",\"message\":\"Cannot GET /coin"}
