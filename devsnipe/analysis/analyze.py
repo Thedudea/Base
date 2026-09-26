@@ -164,10 +164,44 @@ def analyze(dev_dir):
         s["funded_by_dev_sol"] = out_flow.get(s["wallet"], 0) / 1e9
         s["sent_to_dev_sol"] = in_flow.get(s["wallet"], 0) / 1e9
 
-    res = dict(dev=dev, n_tokens=len(toks), tokens=profs, snipers=snipers,
+    res = dict(dev=dev, n_tokens=len(toks), tokens=profs, snipers=snipers, landscape=entry_landscape(toks, dev),
                dev_top_out=[(k, v / 1e9) for k, v in out_flow.most_common(15)],
                dev_top_in=[(k, v / 1e9) for k, v in in_flow.most_common(15)])
     return res, toks
+
+
+def entry_landscape(toks, dev, offsets=(0, 1, 2, 3, 4, 6, 8)):
+    """For an entry landing first/last in slot create+L: entry mcap and the best
+    later mcap reached (a perfect-exit upper bound, before any fees)."""
+    out = {}
+    for L in offsets:
+        rows = []
+        for tok in toks:
+            tr = tok["trades"]
+            cs = tok["creation"]["slot"]
+            n_create = sum(1 for t in tr if t["in_create_tx"])
+            idx = next((i for i, t in enumerate(tr) if i >= n_create and t["slot"] >= cs + L), None)
+            if idx is None:
+                continue
+            same = [i for i in range(idx, len(tr)) if tr[i]["slot"] == tr[idx]["slot"]] if tr[idx]["slot"] == cs + L else [idx]
+            for label, i in (("first", same[0]), ("last", same[-1] + 1 if same[-1] + 1 < len(tr) else same[-1])):
+                entry = tr[i]["pre_vsr"] / tr[i]["pre_vtr"]
+                best = max(t["vsr"] / t["vtr"] for t in tr[i:])
+                rows.append((label, mcap_sol(tr[i]["pre_vsr"], tr[i]["pre_vtr"]), best / entry - 1))
+        for label in ("first", "last"):
+            r = [x for x in rows if x[0] == label]
+            if not r:
+                continue
+            g = sorted(x[2] for x in r)
+            out[f"L{L}_{label}"] = dict(
+                n=len(r),
+                entry_mcap_median=st.median(x[1] for x in r),
+                max_gain_median=st.median(g),
+                share_ge_15=sum(1 for x in g if x >= 0.15) / len(g),
+                share_ge_25=sum(1 for x in g if x >= 0.25) / len(g),
+                share_ge_40=sum(1 for x in g if x >= 0.40) / len(g),
+            )
+    return out
 
 
 def _fmt(x, nd=2):
@@ -192,6 +226,10 @@ def print_report(res):
     pk = [p["peak_before_dev_sell"] for p in profs if p.get("peak_before_dev_sell") is not None]
     if pk:
         print(f"  peak happens before dev's first sell: {sum(pk)}/{len(pk)}")
+    print("\n  entry landscape (perfect-exit upper bound, before fees):")
+    for k, v in res["landscape"].items():
+        print(f"   {k:9s} entry mcap {v['entry_mcap_median']:6.1f}  max gain median {v['max_gain_median']*100:5.1f}%  "
+              f">=15%: {v['share_ge_15']*100:3.0f}%  >=25%: {v['share_ge_25']*100:3.0f}%  >=40%: {v['share_ge_40']*100:3.0f}%")
     print("\n  recurring early buyers:")
     for s in res["snipers"][:12]:
         print(f"   {s['wallet']} tokens {s['tokens']} ({s['share']*100:.0f}%) off~{s['median_off']} "

@@ -203,9 +203,13 @@ def tx_summary(tx):
     top_programs = [keys[ix["programIdIndex"]] for ix in m["instructions"]]
     payer = keys[0]
     transfers = [(f, t, l) for f, t, l in system_transfers(tx) if f == payer]
+    cfg = m.get("transactionConfig") or {}  # v1 transactions carry compute budget here
+    if cfg:
+        cu_limit = cfg.get("computeUnitLimit", cu_limit)
     return dict(
         sig=tx["transaction"]["signatures"][0],
         slot=tx["slot"],
+        tx_index=tx.get("transactionIndex"),
         block_time=tx["blockTime"],
         payer=payer,
         signers=keys[:nsig],
@@ -234,7 +238,12 @@ def order_trades(trades, sig_rank):
 
     Falls back to (slot, getSignaturesForAddress rank) where chaining is ambiguous.
     """
-    trades.sort(key=lambda t: (t["slot"], sig_rank.get(t["sig"], 0), t["ev_idx"]))
+    def pos(t):
+        if t.get("tx_index") is not None:
+            return t["tx_index"]
+        return sig_rank.get(t["sig"], 0)
+
+    trades.sort(key=lambda t: (t["slot"], pos(t), t["ev_idx"]))
     by_slot = defaultdict(list)
     for t in trades:
         by_slot[t["slot"]].append(t)
@@ -289,6 +298,7 @@ def parse_mint(sigs_path, txs_path):
                     slot=info["slot"],
                     block_time=info["block_time"],
                     payer=info["payer"],
+                    tx_index=info["tx_index"],
                     ev_idx=k,
                     in_create_tx=info["is_create"],
                 )

@@ -91,6 +91,7 @@ class Strategy:
     exit_on_dev_sell: bool = False  # sell everything when the dev's first sell is seen
     max_hold_slots: int = None  # optional time stop
     trigger_basis: str = "cost"  # "cost": vs SOL spent per token (GMGN buy price); "curve": vs curve price
+    slip_ref: str = "create"  # buy slippage measured vs the curve after the create tx, or after the dev's bundle
 
 
 class Curve:
@@ -161,16 +162,19 @@ def simulate_token(tok, strat: Strategy, lat: Latency, costs: Costs, rng: random
     failed_tx = costs.base_fee_lamports + prio + (tip if costs.failed_tx_pays_tip else 0)
     rent = int(costs.ata_rent_sol * LAMPORTS)
 
-    # ---- entry: the create tx (and anything bundled into it) always precedes us
+    # ---- entry: the create tx and the dev's bundle (consecutive tx indices right
+    # after it, e.g. the dev's own snipers) always precede us
     L = lat.draw_entry(rng)
     entry_slot = create_slot + L
     n_create = sum(1 for t in trades if t.get("in_create_tx"))
-    idx = max(_slot_insert_index(trades, entry_slot, rng, after_idx=n_create - 1), n_create)
+    n_bundle = bundle_len(trades, create_slot)
+    idx = max(_slot_insert_index(trades, entry_slot, rng, after_idx=n_bundle - 1), n_bundle)
     if idx >= len(trades):
         return dict(result="no_trades_after_entry", pnl_sol=0.0, L=L)
     curve = Curve(trades[idx]["pre_vsr"], trades[idx]["pre_vtr"])
     # buy slippage is measured against the price GMGN saw right after the create tx
-    ref = trades[n_create - 1] if n_create else trades[0]
+    n_ref = n_bundle if strat.slip_ref == "bundle" else n_create
+    ref = trades[n_ref - 1] if n_ref else trades[0]
     ref_curve = Curve(ref["vsr"], ref["vtr"])
 
     amount = int(strat.amount_sol * LAMPORTS)
@@ -271,6 +275,21 @@ def simulate_token(tok, strat: Strategy, lat: Latency, costs: Costs, rng: random
         exit_slot_offset=(sells[0][1] - create_slot) if sells else None,
         events=events,
     )
+
+
+def bundle_len(trades, create_slot):
+    """Number of leading trades that sit in consecutive tx indices from the create tx."""
+    n = 0
+    prev = None
+    for t in trades:
+        if t["slot"] != create_slot:
+            break
+        ti = t.get("tx_index")
+        if n and (ti is None or prev is None or ti - prev > 1):
+            break
+        prev = ti
+        n += 1
+    return max(n, sum(1 for t in trades if t.get("in_create_tx")))
 
 
 def strat_basis(strat):
