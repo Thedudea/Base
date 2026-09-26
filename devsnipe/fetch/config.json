@@ -1,0 +1,13 @@
+{
+  "devs": [
+    "8NJ7Ujpji8uMF2675mqaTSEm2DCbfJA7fiRKtiaqkaLN",
+    "AufH68UFBGSVVRL9D7u5W6NySCrukL4fWfSRTxDcJC6u"
+  ],
+  "maxDevSigs": 3000,
+  "maxTokens": 60,
+  "maxMintSigs": 4000,
+  "maxMintTxs": 350,
+  "blockSlotsAfterCreate": 3,
+  "timeBudgetMin": 150,
+  "runTag": "v1"
+}

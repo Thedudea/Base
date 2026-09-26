@@ -1,0 +1,67 @@
+name: devsnipe-fetch
+
+# Pulls public Solana on-chain history for the dev wallets in
+# devsnipe/fetch/config.json and commits it to devsnipe/data/<runTag>/.
+on:
+  push:
+    branches: [claude/beautiful-mccarthy-d1pizl]
+    paths: ['devsnipe/fetch/**', '.github/workflows/devsnipe-fetch.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: devsnipe-fetch-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    strategy:
+      fail-fast: false
+      matrix:
+        dev:
+          - 8NJ7Ujpji8uMF2675mqaTSEm2DCbfJA7fiRKtiaqkaLN
+          - AufH68UFBGSVVRL9D7u5W6NySCrukL4fWfSRTxDcJC6u
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch
+        run: node devsnipe/fetch/fetch.mjs ${{ matrix.dev }} out/${{ matrix.dev }}
+        env:
+          RPC_URLS: ${{ secrets.RPC_URLS }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: data-${{ matrix.dev }}
+          path: out/${{ matrix.dev }}
+          if-no-files-found: warn
+
+  commit:
+    needs: fetch
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: dl
+      - name: Commit data
+        run: |
+          tag=$(node -p "require('./devsnipe/fetch/config.json').runTag")
+          dest=devsnipe/data/$tag
+          rm -rf "$dest"; mkdir -p "$dest"
+          for d in dl/data-*; do [ -d "$d" ] && cp -r "$d" "$dest/${d#dl/data-}"; done
+          du -sh "$dest"/* || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add devsnipe/data
+          git commit -m "devsnipe: fetched on-chain data ($tag)" || exit 0
+          for i in 1 2 3; do
+            git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME" && break
+            sleep 5
+          done
