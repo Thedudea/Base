@@ -1,0 +1,32 @@
+name: pumpscan-scan
+
+# Continuous market scanner (pumpscan/scan). Each run scans for ~5.5h, commits
+# snapshots to pumpscan/data/scan/ every 30 min and dispatches the next run,
+# until pumpscan/scan/config.json says enabled=false or 'until' has passed.
+on:
+  push:
+    branches: [claude/beautiful-mccarthy-d1pizl]
+    paths: ['pumpscan/scan/**', '.github/workflows/pumpscan-scan.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: pumpscan-scan-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Scan
+        run: bash pumpscan/scan/run.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
