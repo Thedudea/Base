@@ -131,9 +131,18 @@ def tweet_time(url):
     return ((int(m.group(1)) >> 22) + 1288834974657) / 1000 if m else None
 
 
-def main(d):
+def main(d, extra_dir=None):
     dev = os.path.basename(os.path.normpath(d))
     dev_txs = [t for t in load_gz(os.path.join(d, "dev_txs.jsonl.gz")) if t["meta"] and not t["meta"]["err"]]
+    # optional full histories of other wallets (the dev's bait wallets), indexed by mint
+    extra_by_mint = collections.defaultdict(list)
+    if extra_dir:
+        for p in glob.glob(os.path.join(extra_dir, "*", "dev_txs.jsonl.gz")):
+            for t in load_gz(p):
+                if not t["meta"] or t["meta"]["err"]:
+                    continue
+                for m in {b["mint"] for b in (t["meta"].get("postTokenBalances") or []) + (t["meta"].get("preTokenBalances") or [])}:
+                    extra_by_mint[m].append(t)
     creations = {c["mint"]: c for c in json.load(open(os.path.join(d, "creations.json")))}
     meta = {}
     mp = os.path.join(d, "metadata.json")
@@ -188,6 +197,12 @@ def main(d):
         seen = {t["transaction"]["signatures"][0] for t in txs}
         txs += [t for t in dev_txs if t["transaction"]["signatures"][0] not in seen
                 and any(b["mint"] == mint for b in (t["meta"].get("postTokenBalances") or []) + (t["meta"].get("preTokenBalances") or []))]
+        seen |= {t["transaction"]["signatures"][0] for t in txs}
+        for t in extra_by_mint.get(mint, []):
+            sg = t["transaction"]["signatures"][0]
+            if sg not in seen:
+                seen.add(sg)
+                txs.append(t)
         txs.sort(key=lambda t: (t["slot"], t.get("transactionIndex") or 0))
         platform = "launchlab" if any(LAUNCHLAB in account_keys(t) for t in txs[:3]) else "pump"
         flows = collections.defaultdict(lambda: [0, 0, None, None, 0, 0])  # sol, tokens, first slot, first side, ntx, spent
@@ -372,4 +387,4 @@ def report(o):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)
