@@ -104,7 +104,8 @@ async function doToken(addr) {
   // which network is it on? (also finds chains we don't know the GeckoTerminal id of)
   const search = await get(`${GT}/search/pools?query=${addr}`, { gt: true });
   save(dir, 'gt_search.json', search);
-  const nets = [...new Set((search?.data || []).map((p) => p.relationships?.network?.data?.id).filter(Boolean))];
+  // pool ids are '<network>_<address>'
+  const nets = [...new Set((search?.data || []).map((p) => p.relationships?.network?.data?.id || p.id?.split('_')[0]).filter(Boolean))];
   const meta = { addr, nets, pools: [] };
 
   for (const net of nets) {
@@ -146,7 +147,7 @@ async function doToken(addr) {
   }
 
   if (nets.includes('solana') || !addr.startsWith('0x')) {
-    save(dir, 'pumpfun.json', await get(`https://frontend-api-v3.pump.fun/coins/${addr}`));
+    save(dir, 'pumpfun.json', await get(`https://frontend-api-v3.pump.fun/coins-v2/${addr}`) || await get(`https://frontend-api.pump.fun/coins/${addr}`));
     save(dir, 'mint_account.json', await rpc('getAccountInfo', [addr, { encoding: 'jsonParsed' }]));
     save(dir, 'largest_holders.json', await rpc('getTokenLargestAccounts', [addr]));
   }
