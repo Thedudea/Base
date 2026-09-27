@@ -292,7 +292,7 @@ async function main() {
   log('dev sigs', devSigs.length, 'oldest', devSigs.length && new Date(devSigs[devSigs.length - 1].blockTime * 1000).toISOString());
 
   // 2. dev txs, newest first, until we have enough creations
-  const okSigs = devSigs.filter((s) => !s.err);
+  const okSigs = devSigs.filter((s) => !s.err && (!cfg.sinceTime || s.blockTime >= cfg.sinceTime));
   const devTxs = [];
   const creations = [];
   const CHUNK = 100;
@@ -321,6 +321,13 @@ async function main() {
   }
   writeJsonlGz(path.join(OUT, 'dev_txs.jsonl.gz'), devTxs);
   fs.writeFileSync(path.join(OUT, 'creations.json'), JSON.stringify(creations, null, 1));
+  if (cfg.txsOnly) {
+    // wallet-history mode (e.g. a dev's bait wallets): no per-token tapes
+    meta.finishedAt = new Date().toISOString();
+    fs.writeFileSync(path.join(OUT, 'meta.json'), JSON.stringify({ ...meta, errLog }, null, 1));
+    log('txsOnly: done', devTxs.length);
+    return;
+  }
 
   // A wallet that trades rather than creates: study the pump.fun tokens it traded.
   // untilSlot extends each token's window past the wallet's last trade on it.

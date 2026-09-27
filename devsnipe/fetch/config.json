@@ -1,14 +1,26 @@
 {
   "devs": [
-    "bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa"
+    "2ahMS8m1pEHV7GsdQ9tS4yV8oKyWuEDBWpg975GnAY1d",
+    "4mGfB7gSnHLspkwiDhfzbEr4geFrVqbe8Sg6DUenNjdC",
+    "6XAkPYf5zdmbWKkCH9cE2CT1Zk6T683iEL26GwGswvgk",
+    "6Z9BHmwziCYy7qgxngfJkK7hLyVL8VfaJ447WxoC7mjn",
+    "7M9os6RmDuCLk3uUqCWG8FYCAoYNmkzwQDnYtLvTye7W",
+    "A3PgoBHMWHWZaHBMr18KYKQsVw1vZ6nDU4tbaYo5psNN",
+    "BebrqkBBmDwwQMpC5NXuF2HwntPCm6pmQcizPDJHk8j8",
+    "CXuwAZRzpJiaDgGUfcwBzmSimaiUa7hBdFn4hsWivSed",
+    "Fi7C77zS2ucMPZr7RYwvvS6xGXYeBChv3XSsdR4Eywwi",
+    "GYdAGwmJYJjL3ci9tjfj2ZAs4G7Fg1mcRBaw2NM6WK2G",
+    "GgXrfPyH9wJmxwDQhm5G2VzNnEwY7wUVJkgtAZjQUoNc"
   ],
-  "maxDevSigs": 16000,
+  "maxDevSigs": 8000,
   "maxTokens": 240,
   "maxMintSigs": 12000,
   "maxMintTxs": 300,
   "blockSlotsAfterCreate": 3,
   "maxMintSlots": 900,
   "timeBudgetMin": 80,
-  "runTag": "v5-bwam",
-  "shards": 6
+  "runTag": "v5-bwam-bait",
+  "shards": 1,
+  "txsOnly": true,
+  "sinceTime": 1790445414
 }
