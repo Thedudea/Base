@@ -137,8 +137,18 @@ def describe(series, i, j, supply, created, tf):
     # how far it fell after the peak (next 24h)
     post = [c for c in series[j + 1:] if c[0] <= t1 + 86400]
     after_low = min((c[3] for c in post), default=None)
-    mc = (lambda p: p * supply if supply else None)
+    mc = (lambda p: p * supply if supply and p is not None else None)
+    # volume "wake-up" trigger: first candle of the leg whose volume per hour is >= 5x the
+    # average of the 72h before the leg — what a Trending list sorted by volume would show you
+    base_h = vol(t0 - 72 * 3600, t0) / 72
+    kv = next((m for m in range(i, j + 1) if base_h > 0 and series[m][5] * 3600 / step >= 5 * base_h), None)
+    trig = None
+    if kv is not None:
+        entry = series[kv][4]
+        dd = min(c[3] for c in series[kv:j + 1]) / entry
+        trig = dict(at=ts(series[kv][0]), after=dur(series[kv][0] - t0), mc=mc(entry), left=high / entry, worst_before_peak=dd - 1)
     return dict(
+        vol_trigger=trig, base_vol_per_h=base_h,
         start=ts(t0), age_at_start=dur(max(0, t0 - created)) if created else "?", age_sec=(t0 - created) if created else None,
         mc_start=mc(low), mc_peak=mc(high), x=high / low, took=dur(t1 - t0 + step),
         ath_before_mc=mc(ath_before), off_ath=(1 - low / ath_before) if ath_before else None,
@@ -176,7 +186,10 @@ def token_report(tok_dir):
         s = series[tf]
         if len(s) < 10:
             continue
-        moves[tf] = [describe(s, i, j, supply, created, tf) for _, i, j in run_ups(s)]
+        moves[tf] = [describe(s, i, j, supply, created, tf) for _, i, j in run_ups(s, k=1)]
+        # later legs: the token is already >= 1 day old when the move starts
+        off = next((m for m, c in enumerate(s) if created and c[0] >= created + 86400), len(s))
+        moves[tf] += [describe(s, i + off, j + off, supply, created, tf) for _, i, j in run_ups(s[off:], min_ratio=2.0, k=2)]
     return info, moves, series
 
 
@@ -197,6 +210,10 @@ def main(d):
                       f"  vol24b {fmt_usd(m['vol24_before'])} vol6hb {fmt_usd(m['vol6h_before'])} base/d {fmt_usd(m['vol_base_per_day'])}"
                       f"  range24b {xs(m['range24_before'])}  after-2x left {xs(m['left_after_2x'])} (MC {fmt_usd(m['mc_2x'])})"
                       f"  drop24h {pct(m['drop_24h_after'])}")
+                vt = m["vol_trigger"]
+                if vt:
+                    print(f"         vol>=5x trigger {vt['at']} (+{vt['after']} into the leg) MC {fmt_usd(vt['mc'])}: "
+                          f"left {vt['left']:.1f}x, worst dip before peak {vt['worst_before_peak']:.0%}  (base vol/h {fmt_usd(m['base_vol_per_h'])})")
     json.dump(allm, open(os.path.join(d, "pumps.json"), "w"), indent=1, default=str)
 
 
