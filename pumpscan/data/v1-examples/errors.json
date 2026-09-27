@@ -1,0 +1,110 @@
+[
+ {
+  "url": "https://frontend-api-v3.pump.fun/coins/mBj64o7MdEE3TtG5bYFaYX7eVzpMg1SeP8f78G7pump",
+  "status": 404,
+  "body": "{\"statusCode\":404,\"timestamp\":\"2026-09-27T08:43:51.569Z\",\"path\":\"/coins/mBj64o7MdEE3TtG5bYFaYX7eVzpMg1SeP8f78G7pump\",\"message\":\"Cannot GET /coins/mBj64o7MdEE3TtG5bYFaYX7eVzpMg1SeP8f78G7pump\",\"error\":\"Not Found\"}"
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "status": 429
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "status": 403,
+  "body": "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Indexed requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":1}\n"
+ },
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "status": 429
+ },
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "status": 429
+ },
+ {
+  "url": "https://frontend-api-v3.pump.fun/coins/CbcyNo7m1amFWqEQm2m4PLv1UNvpcL3C1Ujm6AkzpKoU",
+  "status": 404,
+  "body": "{\"statusCode\":404,\"timestamp\":\"2026-09-27T08:44:17.018Z\",\"path\":\"/coins/CbcyNo7m1amFWqEQm2m4PLv1UNvpcL3C1Ujm6AkzpKoU\",\"message\":\"Cannot GET /coins/CbcyNo7m1amFWqEQm2m4PLv1UNvpcL3C1Ujm6AkzpKoU\",\"error\":\"Not Found\"}"
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "err": "TimeoutError: The operation was aborted due to timeout"
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "status": 429
+ },
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "status": 429
+ },
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "status": 429
+ },
+ {
+  "url": "https://frontend-api-v3.pump.fun/coins/AQVcP67EpMyu4cBZZjqMu91cVsWy1aX98JmcZm1FyY9",
+  "status": 404,
+  "body": "{\"statusCode\":404,\"timestamp\":\"2026-09-27T08:45:28.855Z\",\"path\":\"/coins/AQVcP67EpMyu4cBZZjqMu91cVsWy1aX98JmcZm1FyY9\",\"message\":\"Cannot GET /coins/AQVcP67EpMyu4cBZZjqMu91cVsWy1aX98JmcZm1FyY9\",\"error\":\"Not Found\"}"
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "status": 429
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "status": 403,
+  "body": "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Indexed requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":1}\n"
+ },
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "status": 429
+ },
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "status": 429
+ },
+ {
+  "url": "https://frontend-api-v3.pump.fun/coins/98kfF7rmsg1QDUEoCqNE7g7M1FdrTt92TEp2CLzypump",
+  "status": 404,
+  "body": "{\"statusCode\":404,\"timestamp\":\"2026-09-27T08:45:54.005Z\",\"path\":\"/coins/98kfF7rmsg1QDUEoCqNE7g7M1FdrTt92TEp2CLzypump\",\"message\":\"Cannot GET /coins/98kfF7rmsg1QDUEoCqNE7g7M1FdrTt92TEp2CLzypump\",\"error\":\"Not Found\"}"
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "err": "TimeoutError: The operation was aborted due to timeout"
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "status": 429
+ },
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "status": 429
+ },
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "status": 429
+ },
+ {
+  "url": "https://frontend-api-v3.pump.fun/coins/9GTFD2DHo1KHd73smcpJtdTEvA6C5zzXxoWzjnb51c8",
+  "status": 404,
+  "body": "{\"statusCode\":404,\"timestamp\":\"2026-09-27T08:47:05.813Z\",\"path\":\"/coins/9GTFD2DHo1KHd73smcpJtdTEvA6C5zzXxoWzjnb51c8\",\"message\":\"Cannot GET /coins/9GTFD2DHo1KHd73smcpJtdTEvA6C5zzXxoWzjnb51c8\",\"error\":\"Not Found\"}"
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "status": 429
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "status": 403,
+  "body": "{\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32602,\"message\":\"Indexed requests require a personal token. Get one at: https://www.allnodes.com/publicnode\"},\"id\":1}\n"
+ },
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "status": 429
+ },
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "status": 429
+ }
+]
