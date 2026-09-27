@@ -47,7 +47,7 @@ const SCHEMA = {
 
 // ------------------------------------------------------------------ http
 
-const hosts = { gt: { gap: 2200, next: 0 }, ds: { gap: 230, next: 0 }, gmgn: { gap: 4000, next: 0 } };
+const hosts = { gt: { gap: 3500, next: 0 }, ds: { gap: 230, next: 0 }, gmgn: { gap: 4000, next: 0 } };
 const errs = {};
 const noteErr = (k) => (errs[k] = (errs[k] || 0) + 1);
 
