@@ -72,7 +72,7 @@ def quote_prices(dev, dev_txs, created):
         x = token_delta(t, dev, m)
         if (s > 0) != (x > 0):
             rates[m].append(abs(s) / abs(x))  # lamports per raw unit
-    return {m: sorted(r)[len(r) // 2] for m, r in rates.items() if len(r) >= 3}
+    return {m: sorted(r)[len(r) // 2] for m, r in rates.items() if len(r) >= 1}
 
 
 def onchain_names(dev_txs, created):

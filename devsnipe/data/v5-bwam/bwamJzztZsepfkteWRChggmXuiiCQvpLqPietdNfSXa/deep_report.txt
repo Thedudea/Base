@@ -1,0 +1,60 @@
+== bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa: 240 launches 09-26 18:06 -> 09-27 04:23 UTC (10.3 h)
+ platforms Counter({'pump': 197, 'launchlab': 43})
+ launch gap median 1.3 min; per hour: [('26 18', 40), ('26 19', 32), ('26 20', 18), ('26 21', 42), ('26 22', 28), ('26 23', 29), ('27 00', 16), ('27 01', 10), ('27 03', 12), ('27 04', 13)]
+
+ cluster wallets: 12  ['2ahMS8', '4mGfB7', '6XAkPY', '6Z9BHm', '7M9os6', 'A3PgoB', 'Bebrqk', 'CXuwAZ', 'Fi7C77', 'GYdAGw', 'GgXrfP', 'bwamJz']
+ dev-only SOL +682.15   cluster (dev+funded) SOL +248.17
+ cluster per token: winners 85/240, median -0.148, mean +1.034, top5 [14.451174865228635, 17.620853918997938, 28.855018518, 30.33191489727288, 30.800589213], worst5 [-23.61400682209713, -3.1802536032750135, -2.217863369599092, -2.096667503971937, -1.5121024310000002]
+   without top  1: +217.37
+   without top  3: +158.18
+   without top  5: +126.11
+   without top 10: +74.16
+ pump      n=197 total +219.06 winners  69 median -0.143
+ launchlab n= 43 total  +29.11 winners  16 median -0.252
+ max drawdown along the way -28.56 SOL
+
+ by dev buy size:
+   3-7 SOL: n=86 total +22.47 win 21/86 outside_in median 2.65
+   7-20 SOL: n=154 total +225.70 win 64/154 outside_in median 5.30
+
+ bait:
+   with bait n=140 total +143.15 win 56/140 outside_in median 5.18
+   no bait   n=100 total +105.02 win 29/100 outside_in median 2.68
+
+ tweet lag (s) vs result:
+   -5-5: n=9 total +11.41 win 3/9
+   5-10: n=11 total -1.43 win 2/11
+   10-20: n=7 total +6.70 win 1/7
+   20-60: n=5 total +4.59 win 1/5
+   60-1000000000.0: n=2 total +0.68 win 1/2
+ UsePaid 'fees to author' vs not:
+   usepaid  n=21 total +8.62 win 4/21
+   plain    n=219 total +239.55 win 81/219
+ authors used most: [(None, 205, 226.58), ('i', 3, 3.16), ('litecoin', 2, 6.46), ('kevinxu', 2, 7.84), ('kimmonismus', 2, -0.54), ('testingcatalog', 2, 11.27), ('neet_sol', 2, -0.26), ('BillAckman', 1, -0.22), ('venturetwins', 1, -0.34), ('BoLoudon', 1, -0.12), ('Polymarket', 1, -0.16), ('rebeccaperrotto', 1, 0.84), ('gillinghammer', 1, -0.2), ('PerryALPHA', 1, -0.38), ('villagebythexyz', 1, -0.36)]
+
+ sell bot: 1837 outside buys answered; next dev sell after median 3 slots (same slot 11%, <=2 slots 40%); dev sell / outside buy median 2.58
+ dev first sell median +12 slots, last +27, sells/token 3
+ tool fee to Di45L… per launch median 0.0148 SOL; metadata still online 38/240
+
+ outsiders:
+   wallets 3016, net -1303.49 SOL, losers 2628, winners 388
+   most frequent: [('9Sq7ti', 91, -0.81), ('DpBUrt', 65, -0.2), ('AHwJSn', 53, 0.97), ('5QY3MB', 48, -1.26), ('haqqiU', 45, 0.21), ('ewcjNU', 45, -0.59), ('GV3LVV', 38, -0.1), ('EDGEKe', 37, -0.02), ('BEpMLd', 34, -29.56), ('BiSdcQ', 31, -0.52)]
+   biggest winners: [('D6Fuvs', 2, 6.58), ('3zNWpe', 1, 5.37), ('2LSncY', 3, 5.34), ('CwvYUD', 3, 5.25), ('67zxCo', 2, 4.15), ('BLw4fX', 2, 3.95), ('5st7H8', 1, 3.9), ('FteNBU', 2, 3.53)]
+   biggest losers: [('BEpMLd', 34, -29.56), ('B7AxLH', 6, -28.09), ('CyaE1V', 11, -25.3), ('a9Cct2', 18, -13.77), ('ardinR', 7, -12.84), ('8BAXvp', 5, -9.41), ('sssssD', 20, -8.79), ('EB5tsA', 6, -8.64)]
+
+ money out of the dev (>1 SOL): [('GhoS9x', 703.1), ('BigrT9', 700.0), ('6XAkPY', 94.8), ('4mGfB7', 85.1), ('2ahMS8', 67.9), ('GgXrfP', 53.5), ('7M9os6', 41.3), ('A3PgoB', 36.2), ('CXuwAZ', 28.8), ('GYdAGw', 28.8), ('7MQQeD', 14.8), ('8ZjisD', 14.8), ('eByz3b', 14.8), ('39uJiu', 14.8), ('HgJL4f', 14.8), ('GF19zE', 14.8), ('CfM4b2', 11.9), ('GTcSwL', 11.9), ('3R4W5f', 11.9), ('546n8a', 11.9)]
+ money into the dev: [('8cCDBQ', 13.44), ('Di45Lo', 6.0)]
+
+ top 12 launches:
+   09-26 22:25 pump      Charlie                @None             lag    -s cluster +30.80 outside_in   0.00 n_out   0 peak  238.4
+   09-26 18:08 pump      onchain golden era     @None             lag    -s cluster +30.33 outside_in  94.31 n_out 120 peak    0.0
+   09-26 21:14 pump      Retard Finder Coin     @None             lag    -s cluster +28.86 outside_in  99.82 n_out 114 peak  180.0
+   09-27 03:41 launchlab butthole               @None             lag    -s cluster +17.62 outside_in  80.45 n_out  91 peak    0.0
+   09-26 19:43 launchlab Minty                  @testingcatalog   lag    4s cluster +14.45 outside_in 104.25 n_out 101 peak    0.0
+   09-26 21:54 pump      Wooly Mammoth          @None             lag    -s cluster +11.93 outside_in  58.15 n_out  81 peak  127.7
+   09-26 18:34 pump      BrewCoin               @None             lag    -s cluster +10.81 outside_in  69.70 n_out  80 peak  104.4
+   09-27 04:10 launchlab Actually Indian        @None             lag    -s cluster +10.18 outside_in  80.92 n_out  90 peak    0.0
+   09-26 21:35 pump      PaidBot                @None             lag    -s cluster +10.09 outside_in  69.86 n_out  73 peak  196.7
+   09-26 19:14 launchlab Billions               @None             lag    -s cluster  +8.94 outside_in  89.35 n_out  33 peak    0.0
+   09-26 19:01 pump      AlphaAI                @kevinxu          lag   19s cluster  +8.40 outside_in 104.72 n_out 135 peak  171.3
+   09-26 23:54 pump      The Top 1%             @None             lag    -s cluster  +7.43 outside_in  17.99 n_out  10 peak    0.0
