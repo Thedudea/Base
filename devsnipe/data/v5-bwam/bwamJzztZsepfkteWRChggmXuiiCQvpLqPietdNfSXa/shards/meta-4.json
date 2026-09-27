@@ -1,0 +1,327 @@
+{
+ "dev": "bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa",
+ "startedAt": "2026-09-27T06:37:15.025Z",
+ "cfg": {
+  "devs": [
+   "bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa"
+  ],
+  "maxDevSigs": 16000,
+  "maxTokens": 240,
+  "maxMintSigs": 12000,
+  "maxMintTxs": 300,
+  "blockSlotsAfterCreate": 3,
+  "maxMintSlots": 900,
+  "timeBudgetMin": 80,
+  "runTag": "v5-bwam",
+  "shards": 6
+ },
+ "errors": [
+  "getBlock 450768548: getBlock failed: https://api.mainnet-beta.solana.com http=200 -32009 Slot 450768548 was skipped, or missing in long-term storage",
+  "getBlock 450768549: getBlock failed: https://solana-rpc.publicnode.com http=200 -32007 Slot 450768549 was skipped, or missing due to ledger jump to recent snapshot",
+  "getBlock 450768550: getBlock failed: https://api.mainnet-beta.solana.com http=200 -32009 Slot 450768550 was skipped, or missing in long-term storage"
+ ],
+ "mode": "creator",
+ "shard": {
+  "SHARD": 4,
+  "NSHARDS": 6,
+  "targets": 40
+ },
+ "mints": [
+  {
+   "mint": "63Ko7KtopHGRSBRfAoYDmPX3xfZDtnq4k1eic8ZCySDY",
+   "sigs": 834,
+   "txs": 44,
+   "missing": 0
+  },
+  {
+   "mint": "Etde7Sy8wpt9gN8cH1CHkMjmnZbpje2ry1yC1gHegA8L",
+   "sigs": 1125,
+   "txs": 79,
+   "missing": 0
+  },
+  {
+   "mint": "5657ZdaMC9oqJPYQcwnw5w4Nbp5zzrkhcrStRRzMwVNp",
+   "sigs": 1374,
+   "txs": 46,
+   "missing": 0
+  },
+  {
+   "mint": "5AE5p8yihikYdGQSmLkQUUcetU1nYxvNKbDYayrdaaau",
+   "sigs": 3094,
+   "txs": 300,
+   "missing": 0
+  },
+  {
+   "mint": "2w9rn42suBbh3X683PXEaEBRHuEqrJNrYYGC7HAo8MTS",
+   "sigs": 1996,
+   "txs": 188,
+   "missing": 0
+  },
+  {
+   "mint": "GodcEfxyGqaVu12w2LHRP5Aofged8e8qu9zMEvr1LPas",
+   "sigs": 3298,
+   "txs": 107,
+   "missing": 0
+  },
+  {
+   "mint": "5mvwTZHDqUidLZmieVGsu3NP9pvtGEeGpVJvgjYuwM8w",
+   "sigs": 847,
+   "txs": 73,
+   "missing": 0
+  },
+  {
+   "mint": "CcseWB6gKDo8L2GYkdY1VnZt7Rxy2v8uxQZ8MK8g8YgR",
+   "sigs": 1648,
+   "txs": 37,
+   "missing": 0
+  },
+  {
+   "mint": "DAmQtS2wTor8if5b6Hxwq8NiuMggiHKkw3cWVhUWzTaK",
+   "sigs": 1757,
+   "txs": 117,
+   "missing": 0
+  },
+  {
+   "mint": "518eu5KtkkztjyX8Mnx9kZ6NniDaVgwNNADejYHKsDJF",
+   "sigs": 2376,
+   "txs": 69,
+   "missing": 0
+  },
+  {
+   "mint": "4Rp8ty6utp4QAdFWsoeGgF9DJzQ8EEyRECpTgZoHigz2",
+   "sigs": 3551,
+   "txs": 137,
+   "missing": 0
+  },
+  {
+   "mint": "8TUqD9DFaCUjPP2Sr249DivAFcqcbTqWpmXypusfi7jW",
+   "sigs": 3640,
+   "txs": 167,
+   "missing": 0
+  },
+  {
+   "mint": "6zrkVRMCJSLUVEsjEyzzN2K9H3UmesKUy8xtGZ3J2EvV",
+   "sigs": 1467,
+   "txs": 37,
+   "missing": 0
+  },
+  {
+   "mint": "5aFzJfWcB8EoKrBwqxm1cWFbEhpk7PFUZjhunZKMhRyp",
+   "sigs": 4615,
+   "txs": 195,
+   "missing": 0
+  },
+  {
+   "mint": "7mQx3TBh5fzqR5ZVLbYCcdmXCGCoDhQKaKzeAGq1McgK",
+   "sigs": 1736,
+   "txs": 48,
+   "missing": 0
+  },
+  {
+   "mint": "D6N54MopesCEfiDy9Lmn6yrzsPNgXmMPMKx55mvnist2",
+   "sigs": 3308,
+   "txs": 92,
+   "missing": 0
+  },
+  {
+   "mint": "ADvNY8ofi9LP1rw6ztmmrCJXj7RkDt23zPEXhDyvoHMs",
+   "sigs": 2366,
+   "txs": 59,
+   "missing": 0
+  },
+  {
+   "mint": "4BCoVREFP4mRYymnPbbh4KEYapn3FfBQ5UPU7nwKxfdG",
+   "sigs": 862,
+   "txs": 28,
+   "missing": 0
+  },
+  {
+   "mint": "2GFLViFMKxFyggiuAbY1y82dPY8Lbkbfdw9ePrxCQs5t",
+   "sigs": 2413,
+   "txs": 64,
+   "missing": 0
+  },
+  {
+   "mint": "3zXqVLZbgeFNm9qgcuPfr4uQ3z3QeQK7H8D7tPwmpzyK",
+   "sigs": 892,
+   "txs": 58,
+   "missing": 0
+  },
+  {
+   "mint": "66k84Yoy2mW59mitnhJnu6qep9qmZqG7tuFw93fiSxBX",
+   "sigs": 2308,
+   "txs": 82,
+   "missing": 0
+  },
+  {
+   "mint": "8EB4RijkucYywq81B67EpsE4Q86rCFUMuuXduYanxNF7",
+   "sigs": 2717,
+   "txs": 83,
+   "missing": 0
+  },
+  {
+   "mint": "DgGxYL8Eh6hMY7wdLWfdc4ksFQV27aqPGpzRyZycUrzQ",
+   "sigs": 7525,
+   "txs": 289,
+   "missing": 0
+  },
+  {
+   "mint": "AVbPGbC2mMfZSJ2Kbokw74DYTkrgECZFQvBfsBfELiTb",
+   "sigs": 2780,
+   "txs": 71,
+   "missing": 0
+  },
+  {
+   "mint": "8SBH5bYyXyQ8fRvWmd9pDXDQ119P67HzVjGw9j91zY9f",
+   "sigs": 3220,
+   "txs": 88,
+   "missing": 0
+  },
+  {
+   "mint": "FZ9AZtWESwoKCKrhCXYsZfngaSzF3jSnasEs6JPCVJpK",
+   "sigs": 2344,
+   "txs": 51,
+   "missing": 0
+  },
+  {
+   "mint": "5ywntjaqBWyprT4vsp85RtVZbd26orZkxp2qYfjryJ3a",
+   "sigs": 3139,
+   "txs": 75,
+   "missing": 0
+  },
+  {
+   "mint": "8pBNj1fL3WgKQfLuDsHN58yBnSveWQHkp7eMtP2uDoy4",
+   "sigs": 3583,
+   "txs": 151,
+   "missing": 0
+  },
+  {
+   "mint": "DSayjfSMjkZ2VKq4nwH6nGh2E4ocZsTmkinECn1e5fDT",
+   "sigs": 2662,
+   "txs": 96,
+   "missing": 0
+  },
+  {
+   "mint": "GcvUNAUX7do4SArHkiasVDEjzkytG1Hj1tcjVaqPt3Nk",
+   "sigs": 3460,
+   "txs": 118,
+   "missing": 0
+  },
+  {
+   "mint": "AKmgtuRPnDC1TXHf2zSAbsCfk6dCouvFzZYqtSP1vp3L",
+   "sigs": 1883,
+   "txs": 81,
+   "missing": 0
+  },
+  {
+   "mint": "HPCcwS7BWgcdswWD1nWejqWkNXuLfrTHSGefW7nWhLnJ",
+   "sigs": 2775,
+   "txs": 76,
+   "missing": 0
+  },
+  {
+   "mint": "3s2xrYY56HDvsizrFtEbMPnSULi3JECCCf1gD8XmkKqD",
+   "sigs": 3160,
+   "txs": 112,
+   "missing": 0
+  },
+  {
+   "mint": "3crVcntg75nr2Pn4y22RTYmgrgbGo6io2yoZwEfkdsvu",
+   "sigs": 3179,
+   "txs": 300,
+   "missing": 0
+  },
+  {
+   "mint": "5TAS6iovd8a4aCTE6fSHfmmE9d1HVV2XKJE6xPXqBq5q",
+   "sigs": 8966,
+   "txs": 300,
+   "missing": 0
+  },
+  {
+   "mint": "Cwyg4rjDDzjyScJPRAMma1h6LjbBfeMheRSuUzK79G9k",
+   "sigs": 2944,
+   "txs": 78,
+   "missing": 0
+  },
+  {
+   "mint": "8ui83rqS67RY1Kx6h9TkkuE1UuevefsZHXqT3kdF6WZF",
+   "sigs": 2464,
+   "txs": 77,
+   "missing": 0
+  },
+  {
+   "mint": "6v3K2z4zPN4XJDG3iKet59sfDh8YpxC5XG1B2ma9tur3",
+   "sigs": 3644,
+   "txs": 119,
+   "missing": 0
+  },
+  {
+   "mint": "E8sNCcX62Vdw8MLgo56qvzZPHd6SPaRTnAVwGjyLhXgt",
+   "sigs": 3588,
+   "txs": 285,
+   "missing": 0
+  },
+  {
+   "mint": "2grEpwLbjDwVR3fREEK27UoZ6PvtPUNypfUuQnTd2nsV",
+   "sigs": 2694,
+   "txs": 300,
+   "missing": 0
+  }
+ ],
+ "finishedAt": "2026-09-27T06:49:33.913Z",
+ "endpointStats": [
+  {
+   "url": "https://api.mainnet-beta.solana.com",
+   "ok": 314,
+   "err": 64,
+   "okBy": {
+    "getSignaturesForAddress": 23,
+    "getTransaction": 276,
+    "getBlock": 15
+   },
+   "hardErr": {
+    "getSignaturesForAddress": 0,
+    "getTransaction": 0,
+    "getBlock": 6
+   },
+   "bad": [],
+   "interval": 4997.8320295739995
+  },
+  {
+   "url": "https://solana-rpc.publicnode.com",
+   "ok": 7690,
+   "err": 23,
+   "okBy": {
+    "getSignaturesForAddress": 123,
+    "getTransaction": 7425,
+    "getBlock": 142
+   },
+   "hardErr": {
+    "getSignaturesForAddress": 0,
+    "getTransaction": 0,
+    "getBlock": 6
+   },
+   "bad": [],
+   "interval": 83.33333333333333
+  }
+ ],
+ "errLog": {
+  "https://api.mainnet-beta.solana.com getTransaction": [
+   "429 429 Too many requests for a specific RPC call"
+  ],
+  "https://solana-rpc.publicnode.com getBlock": [
+   "429 -32005 Rate limit exceeded. To obtain higher limits, please request a personal token or a dedicated node: https://www.al",
+   "http=200 -32007 Slot 450768548 was skipped, or missing due to ledger jump to recent snapshot",
+   "http=200 -32007 Slot 450768549 was skipped, or missing due to ledger jump to recent snapshot",
+   "http=200 -32007 Slot 450768550 was skipped, or missing due to ledger jump to recent snapshot"
+  ],
+  "https://solana-rpc.publicnode.com getTransaction": [
+   "429 -32005 Rate limit exceeded. To obtain higher limits, please request a personal token or a dedicated node: https://www.al"
+  ],
+  "https://api.mainnet-beta.solana.com getBlock": [
+   "http=200 -32009 Slot 450768548 was skipped, or missing in long-term storage",
+   "http=200 -32009 Slot 450768549 was skipped, or missing in long-term storage",
+   "http=200 -32009 Slot 450768550 was skipped, or missing in long-term storage"
+  ]
+ }
+}
