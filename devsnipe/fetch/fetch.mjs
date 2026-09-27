@@ -12,8 +12,12 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 
 const cfg = JSON.parse(fs.readFileSync(new URL('./config.json', import.meta.url)));
+const NSHARDS = Number(cfg.shards || 1);
 const DEV = process.argv[2];
 const OUT = process.argv[3] || `out/${DEV}`;
+// tokens are split across parallel runners: this one handles index % NSHARDS == SHARD
+const SHARD = Number(process.env.SHARD || 0);
+
 const T0 = Date.now();
 const BUDGET_MS = cfg.timeBudgetMin * 60_000;
 const WSOL = 'So11111111111111111111111111111111111111112';
@@ -341,6 +345,9 @@ async function main() {
     fs.writeFileSync(path.join(OUT, 'traded_mints.json'), JSON.stringify(targets, null, 1));
     log(`trader mode: ${traded.size} traded mints, studying ${targets.length}`);
   }
+
+  targets = targets.filter((_, i) => i % NSHARDS === SHARD);
+  meta.shard = { SHARD, NSHARDS, targets: targets.length };
 
   // 3. per-mint history, newest token first
   meta.mints = [];

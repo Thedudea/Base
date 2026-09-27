@@ -2,6 +2,7 @@ name: devsnipe-fetch
 
 # Pulls public Solana on-chain history for the dev wallets in
 # devsnipe/fetch/config.json and commits it to devsnipe/data/<runTag>/.
+# Each dev's tokens are split across `shards` parallel runners (separate RPC rate limits).
 on:
   push:
     branches: [claude/beautiful-mccarthy-d1pizl]
@@ -20,19 +21,23 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       devs: ${{ steps.cfg.outputs.devs }}
+      shards: ${{ steps.cfg.outputs.shards }}
     steps:
       - uses: actions/checkout@v4
       - id: cfg
-        run: echo "devs=$(node -p "JSON.stringify(require('./devsnipe/fetch/config.json').devs)")" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "devs=$(node -p "JSON.stringify(require('./devsnipe/fetch/config.json').devs)")" >> "$GITHUB_OUTPUT"
+          echo "shards=$(node -p "JSON.stringify([...Array(require('./devsnipe/fetch/config.json').shards || 1).keys()])")" >> "$GITHUB_OUTPUT"
 
   fetch:
     needs: setup
     runs-on: ubuntu-latest
-    timeout-minutes: 100
+    timeout-minutes: 110
     strategy:
       fail-fast: false
       matrix:
         dev: ${{ fromJSON(needs.setup.outputs.devs) }}
+        shard: ${{ fromJSON(needs.setup.outputs.shards) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -42,10 +47,11 @@ jobs:
         run: node devsnipe/fetch/fetch.mjs ${{ matrix.dev }} out/${{ matrix.dev }}
         env:
           RPC_URLS: ${{ secrets.RPC_URLS }}
+          SHARD: ${{ matrix.shard }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: data-${{ matrix.dev }}
+          name: data-${{ matrix.dev }}-${{ matrix.shard }}
           path: out/${{ matrix.dev }}
           if-no-files-found: warn
 
@@ -56,15 +62,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - uses: actions/download-artifact@v4
         with:
           path: dl
-      - name: Commit data
+      - name: Merge shards, fetch token metadata, commit
         run: |
           tag=$(node -p "require('./devsnipe/fetch/config.json').runTag")
           dest=devsnipe/data/$tag
           rm -rf "$dest"; mkdir -p "$dest"
-          for d in dl/data-*; do [ -d "$d" ] && cp -r "$d" "$dest/${d#dl/data-}"; done
+          for dev in $(node -p "require('./devsnipe/fetch/config.json').devs.join(' ')"); do
+            mkdir -p "$dest/$dev/mints" "$dest/$dev/shards"
+            for d in dl/data-$dev-*; do
+              [ -d "$d" ] || continue
+              k=${d##*-}
+              [ "$k" = 0 ] && find "$d" -maxdepth 1 -type f -exec cp {} "$dest/$dev/" \;
+              [ -f "$d/meta.json" ] && cp "$d/meta.json" "$dest/$dev/shards/meta-$k.json"
+              [ -d "$d/mints" ] && cp -r "$d/mints/." "$dest/$dev/mints/"
+            done
+            node devsnipe/fetch/metadata.mjs "$dest/$dev" || true
+          done
           du -sh "$dest"/* || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

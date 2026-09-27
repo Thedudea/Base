@@ -2,12 +2,13 @@
   "devs": [
     "bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa"
   ],
-  "maxDevSigs": 3000,
-  "maxTokens": 45,
+  "maxDevSigs": 16000,
+  "maxTokens": 240,
   "maxMintSigs": 12000,
-  "maxMintTxs": 400,
+  "maxMintTxs": 300,
   "blockSlotsAfterCreate": 3,
   "maxMintSlots": 900,
-  "timeBudgetMin": 75,
-  "runTag": "v4-bwam"
+  "timeBudgetMin": 80,
+  "runTag": "v5-bwam",
+  "shards": 6
 }
