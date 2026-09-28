@@ -22,6 +22,7 @@ import sys
 from collections import defaultdict
 
 HOUR = 3600_000
+MIN_LIQ = 5000
 
 
 def rows(d):
@@ -62,7 +63,9 @@ def outcome(s, i, horizon_ms, cost=0.03):
     t0 = s[i]["t"]
     if not p0:
         return None
-    fut = [x for x in s[i + 1:] if x["t"] - t0 <= horizon_ms and x["price"]]
+    # same pair only: when the "top" pair switches pools the quoted price can jump by orders of magnitude
+    pair = s[i]["pair"]
+    fut = [x for x in s[i + 1:] if x["t"] - t0 <= horizon_ms and x["price"] and x["pair"] == pair]
     # need coverage to the horizon, unless the token was dropped for being dead
     last_t = s[-1]["t"]
     if last_t - t0 < horizon_ms * 0.9 and not (fut and fut[-1]["price"] < 0.3 * p0):
@@ -94,7 +97,8 @@ def outcome(s, i, horizon_ms, cost=0.03):
     if ret is None:
         r = fut[-1]["price"] / p0 if fut else 1.0
         ret = realized + (0.5 if half_sold else 1.0) * r
-    return dict(pump=pump, max=mx, ret=ret - 1 - cost)
+    # cap a single trade at +900% so one freak print can't dominate the averages
+    return dict(pump=pump, max=mx, ret=min(ret, 10.0) - 1 - cost)
 
 
 def features(x, m, s_lists, t):
@@ -125,6 +129,8 @@ def decision_points(series, meta, lists, horizon_ms):
             if hb in seen_hours:
                 continue
             seen_hours.add(hb)
+            if (x["liq"] or 0) < MIN_LIQ:
+                continue  # dust pools: not tradable, prices meaningless
             o = outcome(s, i, horizon_ms)
             if o is None:
                 continue
@@ -208,6 +214,40 @@ def search(pts, min_n=40, min_tok=15, top=15):
     return sorted(res, key=lambda x: -x[1]["ret"])[:top], sorted(res, key=lambda x: -x[1]["pump"])[:top]
 
 
+# named presets checked with one signal per token (its first) and a time split
+RULES = {
+    "A launch-traction": dict(age_min_h=0, age_max_h=6, mc_min=30e3, mc_max=300e3, liq_min=50e3, vol24_min=50e3, wake_min=2, ch1h_max=50, social_min=0),
+    "A without 1h-change cap": dict(age_min_h=0, age_max_h=6, mc_min=30e3, mc_max=300e3, liq_min=50e3, vol24_min=50e3, wake_min=2, ch1h_max=1e9, social_min=0),
+    "A with MC up to 1M": dict(age_min_h=0, age_max_h=6, mc_min=30e3, mc_max=1e6, liq_min=50e3, vol24_min=50e3, wake_min=2, ch1h_max=50, social_min=0),
+    "B revival (age>=24h, wake>=5)": dict(age_min_h=24, age_max_h=336, mc_min=50e3, mc_max=10e6, liq_min=30e3, vol24_min=50e3, wake_min=5, ch1h_max=1e9, social_min=0),
+    "REPORT v1 Trending preset": dict(age_min_h=24, age_max_h=336, mc_min=50e3, mc_max=10e6, liq_min=30e3, vol24_min=50e3, wake_min=0, ch1h_max=1e9, social_min=0),
+    "everything (liq>=5K)": dict(age_min_h=0, age_max_h=1e9, mc_min=0, mc_max=1e12, liq_min=0, vol24_min=0, wake_min=0, ch1h_max=1e9, social_min=0),
+}
+
+
+def first_signal_stats(pts):
+    if not pts:
+        return "n=0"
+    r = [p["ret"] for p in pts]
+    r.sort()
+    return (f"tok={len(pts):4d} pump2x={sum(p['pump'] for p in pts) / len(pts):5.1%} avg={sum(r) / len(r):+6.1%} "
+            f"med={r[len(r) // 2]:+6.1%} win={sum(v > 0 for v in r) / len(r):4.0%}")
+
+
+def validate(pts):
+    tmid = sorted(p["t"] for p in pts)[len(pts) // 2]
+    for name, r in RULES.items():
+        first = {}
+        for p in sorted((p for p in pts if rule_ok(p, r)), key=lambda p: p["t"]):
+            first.setdefault(p["token"], p)
+        f = list(first.values())
+        print(f"\n{name}\n   all       {first_signal_stats(f)}")
+        print(f"   1st half  {first_signal_stats([p for p in f if p['t'] < tmid])}")
+        print(f"   2nd half  {first_signal_stats([p for p in f if p['t'] >= tmid])}")
+        for ch in sorted({p["chain"] for p in pts}):
+            print(f"   {ch:9s} {first_signal_stats([p for p in f if p['chain'] == ch])}")
+
+
 def main(d, horizon_h=24):
     series, meta, lists, boosts = load(d)
     span = [min((s[0]["t"] for s in series.values()), default=0), max((s[-1]["t"] for s in series.values()), default=0)]
@@ -224,6 +264,8 @@ def main(d, horizon_h=24):
         print(f"\n{f}:")
         for lo, hi, st in buckets(pts, f, edges):
             print(f"  [{lo:>10.4g}, {hi:>10.4g})  {fmt(st)}")
+    print("\n=== presets, first signal per token ===")
+    validate(pts)
     by_ret, by_pump = search(pts)
     print("\nbest filters by average trade return:")
     for r, st in by_ret:
