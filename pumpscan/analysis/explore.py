@@ -26,6 +26,9 @@ from learn import rows
 
 HOUR = 3600_000
 MIN_LIQ = 5000
+MIN_VOL24 = 10_000  # below this nothing shows up on GMGN's lists and prices are easy to fake
+BAD_DEX = {"fluxbeam"}  # mass-made honeypots with bot-driven straight-line price curves
+PUMP_DEX = {"pumpswap", "pumpfun", "pump-fun"}
 CAP = 9.0  # one trade can add at most +900%
 SIZE = 150.0  # position size in USD, for price impact
 COST = 0.03  # fees + priority/tip, round trip
@@ -43,7 +46,7 @@ STRATS = [
 ]
 HOLDS = [2, 6]
 
-GMGN_FEATS = ["age_h", "mc", "mc_high", "liq", "vol24h", "tx24h", "holders", "top10", "devpct", "is_sol"]
+GMGN_FEATS = ["age_h", "mc", "mc_high", "liq", "vol24h", "tx24h", "holders", "top10", "devpct", "is_sol", "is_pump"]
 VISIBLE_FEATS = ["ch1h", "vol1h", "tx1h", "ch5m"]  # columns you can read off GMGN's Trending list (1h view)
 ALL_FEATS = GMGN_FEATS + VISIBLE_FEATS + [
     "liq_mc", "vol5m", "wake", "wake6", "accel", "buy_ratio5m", "buy_ratio1h", "avg_trade", "ch6h", "ch24h",
@@ -110,12 +113,14 @@ class Data:
                 high[pc] = max(prev_high, price)
                 mc = r[di["mc"]] or r[di["fdv"]] or 0.0
                 mc_high = max(mc_high, mc)
-                if liq < MIN_LIQ or price <= 0:
+                if liq < MIN_LIQ or price <= 0 or r[di["dex"]] in BAD_DEX:
                     continue
                 v1 = r[di["volAllH1"]] or r[di["volH1"]] or 0.0
                 v5 = r[di["volM5"]] or 0.0
                 v6 = r[di["volH6"]] or 0.0
                 v24 = r[di["volAllH24"]] or r[di["volH24"]] or 0.0
+                if v24 < MIN_VOL24:
+                    continue
                 b5, s5 = r[di["buysM5"]] or 0, r[di["sellsM5"]] or 0
                 b1, s1 = r[di["buysH1"]] or 0, r[di["sellsH1"]] or 0
                 tx24 = (r[di["buysH24"]] or 0) + (r[di["sellsH24"]] or 0)
@@ -154,6 +159,7 @@ class Data:
                     top10=hh[hi["top10"]] if hh and hh[hi["top10"]] is not None else np.nan,
                     devpct=hh[hi["devPct"]] if hh and hh[hi["devPct"]] is not None else np.nan,
                     is_sol=1.0 if key[0] == "solana" else 0.0,
+                    is_pump=1.0 if r[di["dex"]] in PUMP_DEX else 0.0,
                 )
                 for k, v in f.items():
                     feats[k].append(np.nan if v is None else float(v))
@@ -276,7 +282,7 @@ def conditions(data, feats, train_mask):
         if len(x) < 100:
             continue
         thr = sorted({r2(q) for q in np.quantile(x, np.linspace(0.1, 0.9, 9))})
-        if f == "is_sol":
+        if f in ("is_sol", "is_pump"):
             thr = [0.5]
         for v in thr:
             out.append(Cond(f, ">=", v, data))
