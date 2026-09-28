@@ -43,6 +43,8 @@ const SCHEMA = {
   m: ['type', 't', 'chain', 'token', 'name', 'symbol', 'socials', 'nWebsites', 'hasImage', 'firstSource'],
   b: ['type', 't', 'chain', 'token', 'kind', 'amount'],
   x: ['type', 't', 'list', 'item'],
+  h: ['type', 't', 'chain', 'token', 'holders', 'top10', 'top11_20', 'top21_40', 'rest', 'devPct', 'mintAuth', 'freezeAuth',
+    'honeypot', 'gtScore', 'launchpadDone', 'holdersUpdated'],
 };
 
 // ------------------------------------------------------------------ http
@@ -142,7 +144,19 @@ function gtRow(t, net, p, list, rank) {
     ...q('m5'), ...q('h1'), ...q('h6'), ...q('h24')];
 }
 
+let cycleNo = 0;
+
 async function discover(t) {
+  // freshly graduated pump.fun coins trade on PumpSwap; its most active pools widen the net
+  if (cycleNo % 3 === 0 && cfg.chains.includes('solana')) {
+    for (let page = 1; page <= (cfg.pumpswapPages || 0); page++) {
+      const j = await get(`${GT}/networks/solana/dexes/pumpswap/pools?sort=h24_tx_count_desc&page=${page}`, 'gt');
+      (j?.data || []).forEach((p, i) => {
+        const row = gtRow(t, 'solana', p, 'pumpswapTx', (page - 1) * 20 + i + 1);
+        if (row) emit(row), track(t, 'solana', row[3], 'pumpswapTx');
+      });
+    }
+  }
   for (const net of cfg.chains) {
     for (const d of cfg.gtTrendingDurations) {
       for (let page = 1; page <= cfg.gtTrendingPages; page++) {
@@ -232,12 +246,33 @@ async function snapshot(t) {
           s.meta = 1;
         }
         s.mc = top.marketCap || top.fdv || 0;
+        s.liq = liq(top);
+        s.created = top.pairCreatedAt ? Math.floor(top.pairCreatedAt / 1000) : s.created;
         s.vol24 = v.h24 || 0;
         if ((v.h1 || 0) >= cfg.hotVolH1 || Math.abs(ch.h1 || 0) >= cfg.hotChangeH1) s.hotUntil = t + 2 * HOUR;
       }
     }
   }
   return due.length;
+}
+
+// Holder stats (what GMGN shows as Holders / Top 10 / Dev holding) for young, liquid tokens.
+// One GeckoTerminal call per token, so only a few per cycle, refreshed at most hourly.
+async function holders(t) {
+  const want = Object.values(state.tokens).filter((s) => s.snap === t && s.created && t / 1000 - s.created < cfg.holdersMaxAgeH * 3600
+    && (s.liq || 0) >= cfg.holdersMinLiq && t - (s.hAt || 0) >= cfg.holdersEveryMin * 60_000);
+  want.sort((a, b) => (a.hAt ? 1 : 0) - (b.hAt ? 1 : 0) || (b.liq || 0) - (a.liq || 0));
+  for (const s of want.slice(0, cfg.holdersPerCycle)) {
+    const j = await get(`${GT}/networks/${s.c}/tokens/${s.a}/info`, 'gt');
+    const a = j?.data?.attributes;
+    if (!a) continue;
+    s.hAt = t;
+    const h = a.holders || {};
+    const dp = h.distribution_percentage || {};
+    emit(['h', t, s.c, s.a, num(h.count), num(dp.top_10), num(dp['11_20'] ?? dp['11_30']), num(dp['21_40'] ?? dp['31_50']), num(dp.rest),
+      num(a.developer_holding_percentage), a.mint_authority ?? null, a.freeze_authority ?? null, a.is_honeypot ?? null,
+      num(a.gt_score), a.launchpad_details?.completed ?? null, sec(h.last_updated)]);
+  }
 }
 
 function prune(t) {
@@ -265,7 +300,9 @@ while (Date.now() - T0 < DURATION - CYCLE / 2) {
   await discover(t);
   if (gmgnOk) await gmgn(t);
   const n = await snapshot(t);
+  await holders(t);
   prune(t);
+  cycleNo++;
   const nRows = rowsThisCycle.length;
   flushRows(t);
   saveState();
