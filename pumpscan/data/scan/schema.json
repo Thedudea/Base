@@ -100,5 +100,23 @@
   "t",
   "list",
   "item"
+ ],
+ "h": [
+  "type",
+  "t",
+  "chain",
+  "token",
+  "holders",
+  "top10",
+  "top11_20",
+  "top21_40",
+  "rest",
+  "devPct",
+  "mintAuth",
+  "freezeAuth",
+  "honeypot",
+  "gtScore",
+  "launchpadDone",
+  "holdersUpdated"
  ]
 }
