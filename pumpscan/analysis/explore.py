@@ -32,6 +32,8 @@ PUMP_DEX = {"pumpswap", "pumpfun", "pump-fun"}
 CAP = 9.0  # one trade can add at most +900%
 SIZE = 150.0  # position size in USD, for price impact
 COST = 0.03  # fees + priority/tip, round trip
+RUG_LIQ = 3000  # pool liquidity below this (USD) ...
+RUG_FRAC = 0.2  # ... or below 20% of the entry liquidity counts as a rug: the position is lost
 
 # (name, tp_fraction, tp_multiple, trail, trail_before_tp, stop_ratio, hold_hours)
 STRATS = [
@@ -200,6 +202,17 @@ class Data:
             if T[m] - T[j] > hold:
                 break
             if PR[m] != pair or P[m] <= 0:
+                continue
+            if L[m] < max(RUG_LIQ, RUG_FRAC * L[j]):
+                # pool drained. A pump.fun graduation empties the curve and trading moves to a new pool:
+                # follow the token there if another pool of it is liquid within 30 min. Otherwise it is a
+                # rug: the quoted price on an empty pool is meaningless and nothing can be sold.
+                nxt = next((n for n in range(m + 1, len(T)) if T[n] - T[m] <= 30 * 60_000 and PR[n] != pair
+                            and L[n] >= max(RUG_LIQ, RUG_FRAC * L[j]) and P[n] > 0), None)
+                if nxt is None:
+                    remaining, last_r = 0.0, 0.0
+                    break
+                pair = PR[nxt]
                 continue
             r = P[m] / pe
             last_r, last_l = r, L[m]
