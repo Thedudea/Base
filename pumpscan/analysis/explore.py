@@ -29,6 +29,8 @@ MIN_LIQ = 5000
 MIN_VOL24 = 10_000  # below this nothing shows up on GMGN's lists and prices are easy to fake
 BAD_DEX = {"fluxbeam"}  # mass-made honeypots with bot-driven straight-line price curves
 PUMP_DEX = {"pumpswap", "pumpfun", "pump-fun"}
+CURVE_DEX = {"pumpfun", "pump-fun"}  # pump.fun bonding curve: DexScreener reports no liquidity
+SOL_USD = 124.0  # only used to estimate bonding-curve depth
 CAP = 9.0  # one trade can add at most +900%
 SIZE = 150.0  # position size in USD, for price impact
 COST = 0.03  # fees + priority/tip, round trip
@@ -63,7 +65,9 @@ def r2(x):
 
 
 class Data:
-    def __init__(self, d):
+    def __init__(self, d, wide=False):
+        """wide=True also admits tokens still on the pump.fun bonding curve (liquidity estimated from
+        the curve formula) and lowers the 24h-volume floor to $1K; the default universe is unchanged."""
         sch = json.load(open(os.path.join(d, "schema.json")))
         # older data folders predate the holder rows
         sch.setdefault("h", ["type", "t", "chain", "token", "holders", "top10", "top11_20", "top21_40", "rest", "devPct",
@@ -80,13 +84,17 @@ class Data:
             elif ty == "h":
                 H[(r[2], r[3])].append(r)
             elif ty == "b":
-                B[(r[2], r[3])].append(r[1])
+                B[(r[2], r[3])].append((r[1], r[4]))
             elif ty == "m":
                 M[(r[2], r[3])] = r
+        # DexScreener "latest" lists already hold older entries on the scanner's very first cycle,
+        # so a token first seen there was paid/boosted at an unknown earlier time
+        t_first_b = min((t for v in B.values() for t, _ in v), default=0)
         self.end = max(r[1] for s in D.values() for r in s[-1:])
         self.start = min(r[1] for s in D.values() for r in s[:1])
         feats = defaultdict(list)
         self.tok_series = []  # per token: (T, P, pair_code, L)
+        self.last_idx = []  # per token: {pair_code: last snapshot index of that pair}
         where_tok, where_i, tok_name = [], [], []
         di, gi, hi = ix["d"], ix["g"], ix["h"]
         pair_codes = {}
@@ -95,33 +103,39 @@ class Data:
             T = np.array([r[1] for r in s], dtype=np.int64)
             P = np.array([r[di["price"]] or 0.0 for r in s], dtype=float)
             PR = np.array([pair_codes.setdefault(r[di["pair"]], len(pair_codes)) for r in s], dtype=np.int64)
-            L = np.array([r[di["liq"]] or 0.0 for r in s], dtype=float)
+            Lrep = np.array([r[di["liq"]] or 0.0 for r in s], dtype=float)
+            # bonding curve (constant product, 30 SOL virtual start): mcap_SOL = vSOL^2 / 32.19
+            L = np.array([2 * SOL_USD * math.sqrt(max(0.0, (r[di["mc"]] or r[di["fdv"]] or 0.0) / SOL_USD * 32.19))
+                          if not r[di["liq"]] and r[di["dex"]] in CURVE_DEX else (r[di["liq"]] or 0.0) for r in s], dtype=float)
             self.tok_series.append((T, P, PR, L))
+            self.last_idx.append({int(c): n for n, c in enumerate(PR)})
             tok_name.append(key)
             g = sorted(G.get(key, []), key=lambda r: r[1])
             gt = [r[1] for r in g]
             h = sorted(H.get(key, []), key=lambda r: r[1])
             ht = [r[1] for r in h]
-            bt = sorted(B.get(key, []))
+            bt = sorted(t for t, _ in B.get(key, []))
+            paid_t = min((t for t, k in B.get(key, []) if k == "profile"), default=None)
+            boost_t = min((t for t, k in B.get(key, []) if k in ("boostLatest", "boostTop")), default=None)
             m = M.get(key)
             socials = len(m[ix["m"]["socials"]] or []) if m else 0
             high = {}
             mc_high = 0.0
             for i, r in enumerate(s):
                 t = r[1]
-                price, liq = P[i], L[i]
+                price, liq = P[i], Lrep[i]
                 pc = PR[i]
                 prev_high = high.get(pc, 0.0)
                 high[pc] = max(prev_high, price)
                 mc = r[di["mc"]] or r[di["fdv"]] or 0.0
                 mc_high = max(mc_high, mc)
-                if liq < MIN_LIQ or price <= 0 or r[di["dex"]] in BAD_DEX:
+                if (L[i] if wide else liq) < MIN_LIQ or price <= 0 or r[di["dex"]] in BAD_DEX:
                     continue
                 v1 = r[di["volAllH1"]] or r[di["volH1"]] or 0.0
                 v5 = r[di["volM5"]] or 0.0
                 v6 = r[di["volH6"]] or 0.0
                 v24 = r[di["volAllH24"]] or r[di["volH24"]] or 0.0
-                if v24 < MIN_VOL24:
+                if v24 < (1000 if wide else MIN_VOL24):
                     continue
                 b5, s5 = r[di["buysM5"]] or 0, r[di["sellsM5"]] or 0
                 b1, s1 = r[di["buysH1"]] or 0, r[di["sellsH1"]] or 0
@@ -162,6 +176,12 @@ class Data:
                     devpct=hh[hi["devPct"]] if hh and hh[hi["devPct"]] is not None else np.nan,
                     is_sol=1.0 if key[0] == "solana" else 0.0,
                     is_pump=1.0 if r[di["dex"]] in PUMP_DEX else 0.0,
+                    curve=1.0 if r[di["dex"]] in CURVE_DEX else 0.0,
+                    liq_eff=L[i],
+                    # minutes since the token first showed up as DEX-paid (DexScreener profile) / boosted;
+                    # 1e6 = paid before the scanner started, NaN = not (yet) paid
+                    paid_min=np.nan if paid_t is None or paid_t > t else 1e6 if paid_t == t_first_b else (t - paid_t) / 60_000,
+                    boost_min=np.nan if boost_t is None or boost_t > t else 1e6 if boost_t == t_first_b else (t - boost_t) / 60_000,
                 )
                 for k, v in f.items():
                     feats[k].append(np.nan if v is None else float(v))
@@ -180,6 +200,7 @@ class Data:
 
     def sim(self, k, strat, hold_h, delay=0, cost=COST, size=SIZE):
         T, P, PR, L = self.tok_series[self.tok[k]]
+        last_idx = self.last_idx[self.tok[k]]
         i = self.loc[k]
         t0, pair = T[i], PR[i]
         hold = hold_h * HOUR
@@ -201,8 +222,15 @@ class Data:
         for m in range(j + 1, len(T)):
             if T[m] - T[j] > hold:
                 break
-            if PR[m] != pair or P[m] <= 0:
+            if P[m] <= 0:
                 continue
+            if PR[m] != pair:
+                # the entry pool stopped trading (e.g. pump.fun curve -> PumpSwap after graduation):
+                # carry on in the token's new main pool if its price continues from where the old one ended
+                lo = last_idx[int(pair)]
+                if not (lo < m and T[m] - T[lo] <= 30 * 60_000 and 1 / 3 <= P[m] / P[lo] <= 3):
+                    continue
+                pair = PR[m]
             if L[m] < max(RUG_LIQ, RUG_FRAC * L[j]):
                 # pool drained. A pump.fun graduation empties the curve and trading moves to a new pool:
                 # follow the token there if another pool of it is liquid within 30 min. Otherwise it is a

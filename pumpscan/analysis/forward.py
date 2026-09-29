@@ -33,13 +33,16 @@ def mask_for(data, conds):
 
 def main(d):
     spec = json.load(open(os.path.join(HERE, "frozen_rules.json")))
-    data = E.Data(d)
+    # wide universe (includes bonding-curve tokens); older rules keep their original universe via
+    # an implicit reported-liquidity >= 5K and 24h volume >= 10K condition
+    data = E.Data(d, wide=True)
     ts = lambda x: dt.datetime.utcfromtimestamp(x / 1000).strftime("%m-%d %H:%M")
     print(f"data until {ts(data.end)} UTC\n")
     out = []
     for rule in spec["rules"]:
         t0 = int(dt.datetime.fromisoformat(rule.get("frozen_at", spec["frozen_at"]).replace("Z", "+00:00")).timestamp() * 1000)
-        m = mask_for(data, rule["conds"]) & (data.t >= t0)
+        conds = rule["conds"] if rule.get("universe") == "wide" else [["liq", ">=", E.MIN_LIQ], ["vol24h", ">=", E.MIN_VOL24]] + rule["conds"]
+        m = mask_for(data, conds) & (data.t >= t0)
         fs = data.first_signals(m)
         print(f"{rule['name']}  (frozen {ts(t0)}; {' & '.join(f'{f}{o}{v:g}' for f, o, v in rule['conds'])})")
         res = dict(name=rule["name"], frozen=t0, exits=[])
