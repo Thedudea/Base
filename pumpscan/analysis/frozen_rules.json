@@ -19,6 +19,8 @@
     {"name": "Q4 F4 + DEX paid", "frozen_at": "2026-09-29T10:00:00Z", "conds": [["paid_min", ">=", 0], ["liq", ">=", 70000], ["mc_high", "<", 160000], ["vol24h", ">=", 70000], ["tx24h", "<", 900]]},
     {"name": "Q6 F6 + DEX paid", "frozen_at": "2026-09-29T10:00:00Z", "conds": [["paid_min", ">=", 0], ["liq", ">=", 57000], ["tx24h", "<", 270], ["vol24h", ">=", 76000], ["mc", "<", 1300000]]},
     {"name": "G1 deep pool, very early (walk-forward 09-29)", "frozen_at": "2026-09-29T11:00:00Z", "conds": [["liq", ">=", 44000], ["mc_high", "<", 75000], ["tx1h", "<", 96], ["tx24h", "<", 160]]},
-    {"name": "G2 deep pool, early, busy (walk-forward 09-29)", "frozen_at": "2026-09-29T11:00:00Z", "conds": [["liq", ">=", 58000], ["mc", "<", 490000], ["tx24h", "<", 240], ["vol24h", ">=", 110000]]}
+    {"name": "G2 deep pool, early, busy (walk-forward 09-29)", "frozen_at": "2026-09-29T11:00:00Z", "conds": [["liq", ">=", 58000], ["mc", "<", 490000], ["tx24h", "<", 240], ["vol24h", ">=", 110000]]},
+    {"name": "H4 F4 on Robinhood, 1h window (GMGN Trending 1h)", "frozen_at": "2026-10-01T13:00:00Z", "conds": [["is_sol", "<", 0.5], ["liq", ">=", 70000], ["mc_high", "<", 160000], ["vol1h", ">=", 70000], ["tx1h", "<", 900]]},
+    {"name": "H4P H4 + DEX paid", "frozen_at": "2026-10-01T13:00:00Z", "conds": [["paid_min", ">=", 0], ["is_sol", "<", 0.5], ["liq", ">=", 70000], ["mc_high", "<", 160000], ["vol1h", ">=", 70000], ["tx1h", "<", 900]]}
   ]
 }

@@ -20,7 +20,7 @@ import numpy as np
 import explore as E
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-EXITS = [(E.STRATS[0], 6), (E.STRATS[1], 2), (E.STRATS[4], 6)]
+EXITS = [(E.STRATS[0], 6), (E.STRATS[3], 6), (E.STRATS[1], 2), (E.STRATS[4], 6)]
 
 
 def mask_for(data, conds):
