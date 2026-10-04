@@ -1,5 +1,5 @@
 {
-  "enabled": true,
+  "enabled": false,
   "until": "2026-10-04T00:00:00Z",
   "chains": ["solana", "robinhood"],
   "cycleSec": 300,
