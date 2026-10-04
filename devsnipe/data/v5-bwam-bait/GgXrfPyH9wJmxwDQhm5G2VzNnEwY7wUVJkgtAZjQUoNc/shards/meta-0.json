@@ -1,0 +1,40 @@
+{
+ "dev": "GgXrfPyH9wJmxwDQhm5G2VzNnEwY7wUVJkgtAZjQUoNc",
+ "startedAt": "2026-09-27T06:54:20.213Z",
+ "cfg": {
+  "devs": [
+   "2ahMS8m1pEHV7GsdQ9tS4yV8oKyWuEDBWpg975GnAY1d",
+   "4mGfB7gSnHLspkwiDhfzbEr4geFrVqbe8Sg6DUenNjdC",
+   "6XAkPYf5zdmbWKkCH9cE2CT1Zk6T683iEL26GwGswvgk",
+   "6Z9BHmwziCYy7qgxngfJkK7hLyVL8VfaJ447WxoC7mjn",
+   "7M9os6RmDuCLk3uUqCWG8FYCAoYNmkzwQDnYtLvTye7W",
+   "A3PgoBHMWHWZaHBMr18KYKQsVw1vZ6nDU4tbaYo5psNN",
+   "BebrqkBBmDwwQMpC5NXuF2HwntPCm6pmQcizPDJHk8j8",
+   "CXuwAZRzpJiaDgGUfcwBzmSimaiUa7hBdFn4hsWivSed",
+   "Fi7C77zS2ucMPZr7RYwvvS6xGXYeBChv3XSsdR4Eywwi",
+   "GYdAGwmJYJjL3ci9tjfj2ZAs4G7Fg1mcRBaw2NM6WK2G",
+   "GgXrfPyH9wJmxwDQhm5G2VzNnEwY7wUVJkgtAZjQUoNc"
+  ],
+  "maxDevSigs": 8000,
+  "maxTokens": 240,
+  "maxMintSigs": 12000,
+  "maxMintTxs": 300,
+  "blockSlotsAfterCreate": 3,
+  "maxMintSlots": 900,
+  "timeBudgetMin": 80,
+  "runTag": "v5-bwam-bait",
+  "shards": 1,
+  "txsOnly": true,
+  "sinceTime": 1790445414
+ },
+ "errors": [],
+ "finishedAt": "2026-09-27T06:54:25.934Z",
+ "errLog": {
+  "https://solana-rpc.publicnode.com getSignaturesForAddress": [
+   "http=200 -32020 Transaction 2PitAVi7JLsdGgEEKBCe2KbLdAU9EQboPKXHbSo8FNnUH8U59dXYQFRB699YCyZ6mhzV3cVhoGFK9QcoevoDnMDy not found",
+   "http=200 -32020 Transaction 54anwiR33sDLivccr6ynejwyc8DBkPXttvtH6ttMT9DNJSvVz8crww566HM7LuhfFwPAyKfGyBHmtTnCeuw7EvXc not found",
+   "http=200 -32020 Transaction 2U4Kyr1tWi9VFiUWGATEJhryju36bAGkZg7GoQ3jxtDEt3YETRpMtffE3rKY524VwAntf743ky6D8SrPipKq4oaZ not found",
+   "http=200 -32020 Transaction 3tx6DCugnwGddwfCMXHpLLRKuYycBaAW3jPqeYhpafUBXUEaouae2cAETm2rZ9vNQDZvjm1ETLKXq6RDd4R8DEU3 not found"
+  ]
+ }
+}

@@ -1,0 +1,177 @@
+tokens with snapshots: 5257, snapshots: 396947, span 22.8 h, horizon 6 h
+decision points with a known outcome: n=18997 tok=2676 pump2x=  4.2% avg_ret= -3.2% median= -3.0% p10=-39.5%
+  robinhood  n=12981 tok=1539 pump2x=  2.1% avg_ret= -3.9% median= -3.0% p10=-18.8%
+  solana     n= 6016 tok=1137 pump2x=  8.8% avg_ret= -1.6% median= -5.3% p10=-48.6%
+
+age_h:
+  [         0,          1)  n= 2662 tok=1861 pump2x= 13.9% avg_ret= +1.2% median= -3.0% p10=-102.4%
+  [         1,          6)  n= 4477 tok=1111 pump2x=  3.5% avg_ret= -3.8% median= -3.0% p10=-38.9%
+  [         6,         24)  n= 4631 tok= 742 pump2x=  2.8% avg_ret= -2.0% median= -3.0% p10=-23.7%
+  [        24,         72)  n=  791 tok=  77 pump2x=  3.3% avg_ret=-13.6% median=-17.8% p10=-43.1%
+  [        72,        168)  n=  507 tok=  45 pump2x=  1.2% avg_ret= -9.2% median= -8.7% p10=-39.9%
+  [       168,      1e+09)  n= 5381 tok= 414 pump2x=  0.7% avg_ret= -5.2% median= -4.6% p10=-18.7%
+
+mc:
+  [         0,      3e+04)  n= 6850 tok=1129 pump2x=  2.9% avg_ret= -2.3% median= -3.0% p10=-29.5%
+  [     3e+04,      1e+05)  n= 4194 tok= 900 pump2x=  5.3% avg_ret= +0.5% median= -3.0% p10=-42.4%
+  [     1e+05,      3e+05)  n= 2115 tok= 509 pump2x=  6.8% avg_ret= -2.7% median= -3.0% p10=-63.3%
+  [     3e+05,      1e+06)  n= 1741 tok= 352 pump2x=  9.6% avg_ret= -9.8% median= -4.6% p10=-45.2%
+  [     1e+06,      3e+06)  n= 1167 tok= 201 pump2x=  3.7% avg_ret= -8.8% median= -4.8% p10=-39.7%
+  [     3e+06,      1e+07)  n= 1136 tok= 116 pump2x=  1.6% avg_ret= -6.8% median= -4.4% p10=-22.7%
+  [     1e+07,      1e+12)  n= 1773 tok= 145 pump2x=  0.5% avg_ret= -4.3% median= -4.0% p10=-12.8%
+
+liq:
+  [         0,      1e+04)  n= 1698 tok= 275 pump2x=  3.7% avg_ret= -4.4% median= -3.0% p10=-39.1%
+  [     1e+04,      3e+04)  n= 6511 tok=1136 pump2x=  3.8% avg_ret= -4.3% median= -3.0% p10=-40.3%
+  [     3e+04,      1e+05)  n= 5539 tok=1010 pump2x=  6.5% avg_ret= +0.2% median= -3.0% p10=-39.5%
+  [     1e+05,      3e+05)  n= 2429 tok= 429 pump2x=  4.0% avg_ret= -5.2% median= -3.8% p10=-49.1%
+  [     3e+05,      1e+12)  n= 2820 tok= 290 pump2x=  1.2% avg_ret= -4.6% median= -3.9% p10=-15.9%
+
+liq_mc:
+  [         0,       0.05)  n= 1730 tok= 157 pump2x=  0.5% avg_ret= -6.1% median= -3.8% p10=-16.4%
+  [      0.05,        0.1)  n= 1181 tok= 186 pump2x=  4.6% avg_ret= -9.3% median= -6.4% p10=-39.3%
+  [       0.1,        0.2)  n= 1904 tok= 345 pump2x=  8.5% avg_ret=-10.0% median= -6.2% p10=-43.7%
+  [       0.2,        0.4)  n= 2256 tok= 435 pump2x=  6.6% avg_ret= -9.3% median= -5.7% p10=-48.4%
+  [       0.4,      1e+09)  n=11905 tok=1928 pump2x=  3.6% avg_ret= -0.0% median= -3.0% p10=-33.4%
+
+vol24h:
+  [         0,      1e+04)  n= 3785 tok= 620 pump2x=  1.3% avg_ret= -4.7% median= -3.0% p10= -6.5%
+  [     1e+04,      5e+04)  n= 4931 tok=1008 pump2x=  2.9% avg_ret= -3.8% median= -3.0% p10=-15.1%
+  [     5e+04,      2e+05)  n= 4637 tok= 891 pump2x=  4.4% avg_ret= -2.7% median= -3.0% p10=-40.1%
+  [     2e+05,      1e+06)  n= 3508 tok= 640 pump2x=  7.4% avg_ret= -2.8% median= -4.6% p10=-43.2%
+  [     1e+06,      5e+06)  n= 1572 tok= 221 pump2x=  6.0% avg_ret= -4.4% median= -4.4% p10=-43.9%
+  [     5e+06,      1e+12)  n=  564 tok=  66 pump2x=  9.4% avg_ret= +9.5% median= -5.1% p10=-49.2%
+
+wake:
+  [         0,        0.5)  n=10451 tok=1405 pump2x=  1.5% avg_ret= -3.7% median= -3.0% p10=-17.6%
+  [       0.5,          1)  n= 1913 tok= 550 pump2x=  2.1% avg_ret= -6.4% median= -5.2% p10=-38.4%
+  [         1,          2)  n= 1606 tok= 536 pump2x=  2.3% avg_ret= -4.4% median= -4.2% p10=-38.9%
+  [         2,          5)  n= 1021 tok= 523 pump2x=  4.3% avg_ret= -4.7% median= -4.4% p10=-41.6%
+  [         5,         10)  n=  403 tok= 302 pump2x=  6.7% avg_ret= -6.9% median= -4.8% p10=-54.5%
+  [        10,      1e+09)  n= 3603 tok=2189 pump2x= 13.9% avg_ret= +1.4% median= -3.0% p10=-102.2%
+
+wake6:
+  [         0,        0.5)  n=10023 tok=1454 pump2x=  1.4% avg_ret= -3.5% median= -3.0% p10=-14.6%
+  [       0.5,          1)  n= 2502 tok= 627 pump2x=  3.5% avg_ret= -5.1% median= -5.1% p10=-39.6%
+  [         1,          2)  n= 2028 tok= 653 pump2x=  3.3% avg_ret= -6.3% median= -5.1% p10=-40.5%
+  [         2,          4)  n=  967 tok= 566 pump2x=  3.1% avg_ret= -7.2% median= -4.7% p10=-43.3%
+  [         4,      1e+09)  n= 3477 tok=2230 pump2x= 13.7% avg_ret= +2.2% median= -3.0% p10=-102.2%
+
+ch1h:
+  [      -100,        -20)  n=  950 tok= 481 pump2x= 12.0% avg_ret= -7.9% median=-28.0% p10=-56.5%
+  [       -20,          0)  n= 4419 tok= 858 pump2x=  2.5% avg_ret= -5.1% median= -4.7% p10=-38.0%
+  [         0,         20)  n= 3531 tok= 981 pump2x=  2.4% avg_ret= -7.8% median= -5.2% p10=-40.9%
+  [        20,         50)  n=  616 tok= 451 pump2x= 13.5% avg_ret= +5.3% median=-11.4% p10=-82.8%
+  [        50,        100)  n=  551 tok= 419 pump2x= 16.5% avg_ret=+15.8% median= -3.0% p10=-89.0%
+  [       100,      1e+09)  n= 1950 tok=1231 pump2x= 16.3% avg_ret= +3.5% median= -3.0% p10=-102.4%
+
+ch24h:
+  [      -100,        -50)  n= 1925 tok= 320 pump2x=  6.1% avg_ret= -4.9% median= -7.5% p10=-42.6%
+  [       -50,          0)  n= 4196 tok= 660 pump2x=  1.9% avg_ret= -5.4% median= -3.7% p10=-28.6%
+  [         0,        100)  n= 5404 tok=1127 pump2x=  3.3% avg_ret= -3.4% median= -3.0% p10=-38.4%
+  [       100,        500)  n= 4430 tok= 933 pump2x=  3.9% avg_ret= +2.1% median= -3.0% p10=-22.8%
+  [       500,      1e+09)  n= 2801 tok= 518 pump2x=  9.3% avg_ret= -6.5% median= -3.0% p10=-57.1%
+
+buy_ratio1h:
+  [         0,        0.4)  n= 9224 tok=1345 pump2x=  0.5% avg_ret= -3.6% median= -3.0% p10= -8.5%
+  [       0.4,        0.5)  n= 1905 tok= 658 pump2x=  4.0% avg_ret= -7.4% median= -6.5% p10=-41.1%
+  [       0.5,        0.6)  n= 3879 tok=1452 pump2x=  7.0% avg_ret= -2.9% median= -3.1% p10=-45.6%
+  [       0.6,        0.7)  n= 1747 tok= 851 pump2x=  9.3% avg_ret= +4.7% median= -3.3% p10=-43.8%
+  [       0.7,       1.01)  n= 2242 tok=1150 pump2x= 11.2% avg_ret= -4.2% median= -3.4% p10=-103.0%
+
+tx1h:
+  [         0,         50)  n=11688 tok=1564 pump2x=  1.0% avg_ret= -4.5% median= -3.0% p10=-14.2%
+  [        50,        200)  n= 3089 tok=1101 pump2x=  4.9% avg_ret= +0.8% median= -3.2% p10=-39.6%
+  [       200,       1000)  n= 2360 tok= 853 pump2x=  8.1% avg_ret= -3.3% median= -3.7% p10=-48.0%
+  [      1000,       5000)  n= 1373 tok= 737 pump2x= 18.1% avg_ret= +5.7% median= -6.6% p10=-89.0%
+  [      5000,      1e+09)  n=  487 tok= 313 pump2x= 20.1% avg_ret=-19.8% median=-38.6% p10=-102.7%
+
+buyers1h:
+  [         0,         20)  n= 2196 tok=1056 pump2x=  4.6% avg_ret= -6.6% median= -3.0% p10=-70.7%
+  [        20,        100)  n= 2346 tok=1001 pump2x=  5.4% avg_ret= +1.2% median= -3.0% p10=-39.7%
+  [       100,        300)  n=  967 tok= 399 pump2x=  9.7% avg_ret= -5.8% median= -5.9% p10=-55.1%
+  [       300,       1000)  n=  669 tok= 381 pump2x= 19.7% avg_ret= +1.5% median=-17.8% p10=-97.5%
+  [      1000,      1e+09)  n=  535 tok= 322 pump2x= 24.3% avg_ret= +4.3% median= -7.2% p10=-102.7%
+
+socials:
+  [         0,          1)  n=12122 tok=2085 pump2x=  4.7% avg_ret= -1.3% median= -3.0% p10=-38.3%
+  [         1,          2)  n= 3473 tok= 319 pump2x=  5.4% avg_ret= -7.6% median= -8.8% p10=-43.0%
+  [         2,         10)  n= 3402 tok= 272 pump2x=  1.3% avg_ret= -5.2% median= -5.3% p10=-25.7%
+
+=== presets, first signal per token ===
+
+A launch-traction
+   all       tok=  71 pump2x=23.9% avg=+73.0% med=+14.8% win= 59%
+   1st half  tok=  44 pump2x=27.3% avg=+83.9% med=+29.7% win= 68%
+   2nd half  tok=  27 pump2x=18.5% avg=+55.3% med= -3.0% win= 44%
+   robinhood tok=  32 pump2x=18.8% avg= +9.9% med= -3.0% win= 44%
+   solana    tok=  39 pump2x=28.2% avg=+124.8% med=+29.5% win= 72%
+
+A without 1h-change cap
+   all       tok= 267 pump2x=17.2% avg=+36.1% med= -3.0% win= 44%
+   1st half  tok= 177 pump2x=20.3% avg=+43.0% med= +1.0% win= 53%
+   2nd half  tok=  90 pump2x=11.1% avg=+22.5% med= -3.0% win= 27%
+   robinhood tok= 179 pump2x=15.1% avg=+17.7% med= -3.0% win= 35%
+   solana    tok=  88 pump2x=21.6% avg=+73.6% med=+13.7% win= 61%
+
+A with MC up to 1M
+   all       tok=  97 pump2x=24.7% avg=+43.0% med= -1.3% win= 48%
+   1st half  tok=  56 pump2x=28.6% avg=+60.7% med=+10.3% win= 59%
+   2nd half  tok=  41 pump2x=19.5% avg=+18.9% med=-45.6% win= 34%
+   robinhood tok=  47 pump2x=21.3% avg= -2.2% med= -3.0% win= 36%
+   solana    tok=  50 pump2x=28.0% avg=+85.5% med=+10.3% win= 60%
+
+B revival (age>=24h, wake>=5)
+   all       tok=  29 pump2x= 0.0% avg=-18.3% med=-28.9% win= 31%
+   1st half  tok=  17 pump2x= 0.0% avg=-17.2% med=-12.2% win= 29%
+   2nd half  tok=  12 pump2x= 0.0% avg=-19.8% med=-34.8% win= 33%
+   robinhood tok=  17 pump2x= 0.0% avg=-15.2% med=-11.5% win= 35%
+   solana    tok=  12 pump2x= 0.0% avg=-22.6% med=-38.3% win= 25%
+
+REPORT v1 Trending preset
+   all       tok=  97 pump2x= 2.1% avg=-16.5% med=-21.5% win= 25%
+   1st half  tok=  77 pump2x= 2.6% avg=-13.4% med=-17.1% win= 27%
+   2nd half  tok=  20 pump2x= 0.0% avg=-28.7% med=-34.8% win= 15%
+   robinhood tok=  47 pump2x= 2.1% avg=-14.9% med=-15.9% win= 30%
+   solana    tok=  50 pump2x= 2.0% avg=-18.0% med=-22.1% win= 20%
+
+everything (liq>=5K)
+   all       tok=2465 pump2x=12.1% avg= -1.4% med= -3.0% win= 30%
+   1st half  tok=1675 pump2x=11.2% avg= +3.2% med= -3.0% win= 30%
+   2nd half  tok= 790 pump2x=14.1% avg=-11.1% med= -3.4% win= 29%
+   robinhood tok=1440 pump2x= 5.9% avg= -6.7% med= -3.0% win= 23%
+   solana    tok=1025 pump2x=20.8% avg= +6.1% med= -4.2% win= 38%
+
+best filters by average trade return:
+   n=   86 tok=  53 pump2x= 22.1% avg_ret=+85.6% median= +7.4% p10=-77.8% {'age_max_h': 6, 'mc_min': 100000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 2, 'ch1h_max': 50}
+   n=  118 tok=  71 pump2x= 20.3% avg_ret=+79.7% median=+12.4% p10=-77.8% {'age_max_h': 6, 'mc_min': 30000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 2, 'ch1h_max': 50}
+   n=  119 tok=  71 pump2x= 20.2% avg_ret=+79.0% median=+11.5% p10=-77.8% {'age_max_h': 6, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 2, 'ch1h_max': 50}
+   n=   81 tok=  49 pump2x= 21.0% avg_ret=+78.8% median= +4.8% p10=-77.8% {'age_max_h': 6, 'mc_min': 100000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 200000.0, 'wake_min': 2, 'ch1h_max': 50}
+   n=   94 tok=  57 pump2x= 21.3% avg_ret=+78.3% median= +7.4% p10=-77.8% {'age_max_h': 72, 'mc_min': 100000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 2, 'ch1h_max': 50}
+   n=   85 tok=  52 pump2x= 21.2% avg_ret=+75.0% median= +4.8% p10=-78.2% {'age_max_h': 72, 'mc_min': 100000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 200000.0, 'wake_min': 2, 'ch1h_max': 50}
+   n=   75 tok=  50 pump2x= 21.3% avg_ret=+74.5% median= +7.8% p10=-79.2% {'age_max_h': 6, 'mc_min': 100000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 5, 'ch1h_max': 50}
+   n=   75 tok=  50 pump2x= 21.3% avg_ret=+74.5% median= +7.8% p10=-79.2% {'age_max_h': 72, 'mc_min': 100000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 5, 'ch1h_max': 50}
+   n=   87 tok=  54 pump2x= 20.7% avg_ret=+72.6% median= +4.8% p10=-78.2% {'age_max_h': 336, 'mc_min': 100000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 200000.0, 'wake_min': 2, 'ch1h_max': 50}
+   n=  105 tok=  68 pump2x= 20.0% avg_ret=+72.0% median=+12.4% p10=-78.6% {'age_max_h': 6, 'mc_min': 30000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 5, 'ch1h_max': 50}
+   n=  106 tok=  69 pump2x= 19.8% avg_ret=+71.5% median=+13.4% p10=-78.6% {'age_max_h': 72, 'mc_min': 30000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 5, 'ch1h_max': 50}
+   n=  106 tok=  68 pump2x= 19.8% avg_ret=+71.3% median=+12.4% p10=-78.6% {'age_max_h': 6, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 5, 'ch1h_max': 50}
+   n=  107 tok=  69 pump2x= 19.6% avg_ret=+70.8% median=+12.4% p10=-78.6% {'age_max_h': 72, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 5, 'ch1h_max': 50}
+   n=   79 tok=  53 pump2x= 20.3% avg_ret=+70.0% median= +6.0% p10=-79.2% {'age_max_h': 336, 'mc_min': 100000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 5, 'ch1h_max': 50}
+   n=  138 tok=  75 pump2x= 18.1% avg_ret=+69.6% median=+12.4% p10=-77.6% {'age_max_h': 72, 'mc_min': 30000.0, 'mc_max': 300000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 2, 'ch1h_max': 50}
+
+best filters by pump rate:
+   n=   40 tok=  22 pump2x= 32.5% avg_ret= +1.5% median=-39.9% p10=-54.6% {'age_max_h': 6, 'mc_min': 100000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'wake_min': 2, 'social_min': 1}
+   n=   40 tok=  22 pump2x= 32.5% avg_ret= +1.5% median=-39.9% p10=-54.6% {'age_max_h': 6, 'mc_min': 100000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 2, 'social_min': 1}
+   n=   40 tok=  26 pump2x= 32.5% avg_ret= +4.5% median=-39.7% p10=-55.9% {'age_max_h': 72, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 5, 'social_min': 1}
+   n=   40 tok=  26 pump2x= 32.5% avg_ret= +4.5% median=-39.7% p10=-55.9% {'age_max_h': 72, 'mc_min': 30000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 5, 'social_min': 1}
+   n=   41 tok=  23 pump2x= 31.7% avg_ret= +0.1% median=-40.5% p10=-55.9% {'age_max_h': 6, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'wake_min': 2, 'social_min': 1}
+   n=   41 tok=  23 pump2x= 31.7% avg_ret= +0.1% median=-40.5% p10=-55.9% {'age_max_h': 6, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 2, 'social_min': 1}
+   n=   41 tok=  23 pump2x= 31.7% avg_ret= +0.1% median=-40.5% p10=-55.9% {'age_max_h': 6, 'mc_min': 30000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'wake_min': 2, 'social_min': 1}
+   n=   41 tok=  23 pump2x= 31.7% avg_ret= +0.1% median=-40.5% p10=-55.9% {'age_max_h': 6, 'mc_min': 30000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 2, 'social_min': 1}
+   n=   41 tok=  26 pump2x= 31.7% avg_ret= +7.0% median=-39.5% p10=-54.6% {'age_max_h': 72, 'mc_min': 100000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'wake_min': 5, 'social_min': 1}
+   n=  589 tok= 393 pump2x= 30.7% avg_ret= -3.5% median=-31.8% p10=-103.0% {'age_max_h': 6, 'mc_min': 100000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'wake_min': 5}
+   n=  629 tok= 401 pump2x= 30.4% avg_ret= -0.9% median= -8.5% p10=-103.0% {'age_max_h': 6, 'mc_min': 100000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'wake_min': 2}
+   n=  415 tok= 234 pump2x= 30.4% avg_ret=+21.3% median= -3.0% p10=-102.3% {'age_max_h': 6, 'mc_min': 100000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 2}
+   n=  604 tok= 402 pump2x= 30.3% avg_ret= -3.4% median=-22.4% p10=-103.0% {'age_max_h': 72, 'mc_min': 100000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'wake_min': 5}
+   n=  383 tok= 232 pump2x= 30.3% avg_ret=+19.2% median= -3.0% p10=-102.3% {'age_max_h': 6, 'mc_min': 100000.0, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'vol24_min': 50000.0, 'wake_min': 5}
+   n=   43 tok=  28 pump2x= 30.2% avg_ret= +5.9% median=-39.5% p10=-55.9% {'age_max_h': 72, 'mc_max': 1000000.0, 'liq_min': 50000.0, 'wake_min': 5, 'social_min': 1}

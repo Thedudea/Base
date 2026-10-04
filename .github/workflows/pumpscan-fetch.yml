@@ -1,0 +1,46 @@
+name: pumpscan-fetch
+
+# Pulls public market history (DexScreener, GeckoTerminal, Solana RPC) for the
+# tokens in pumpscan/fetch/config.json and commits it to pumpscan/data/<runTag>/.
+on:
+  push:
+    branches: [claude/beautiful-mccarthy-d1pizl]
+    paths: ['pumpscan/fetch/**', '.github/workflows/pumpscan-fetch.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pumpscan-fetch-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch
+        run: node pumpscan/fetch/fetch.mjs out
+        env:
+          RPC_URLS: ${{ secrets.RPC_URLS }}
+      - name: Commit
+        if: ${{ !cancelled() }}
+        run: |
+          tag=$(node -p "require('./pumpscan/fetch/config.json').runTag")
+          dest=pumpscan/data/$tag
+          rm -rf "$dest"; mkdir -p "$dest"
+          cp -r out/. "$dest/"
+          du -sh "$dest" || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pumpscan/data
+          git commit -m "pumpscan: fetched market data ($tag)" || exit 0
+          for i in 1 2 3; do
+            git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME" && break
+            sleep 5
+          done

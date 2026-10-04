@@ -1,0 +1,315 @@
+{
+ "dev": "bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa",
+ "startedAt": "2026-09-27T06:37:15.413Z",
+ "cfg": {
+  "devs": [
+   "bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa"
+  ],
+  "maxDevSigs": 16000,
+  "maxTokens": 240,
+  "maxMintSigs": 12000,
+  "maxMintTxs": 300,
+  "blockSlotsAfterCreate": 3,
+  "maxMintSlots": 900,
+  "timeBudgetMin": 80,
+  "runTag": "v5-bwam",
+  "shards": 6
+ },
+ "errors": [],
+ "mode": "creator",
+ "shard": {
+  "SHARD": 1,
+  "NSHARDS": 6,
+  "targets": 40
+ },
+ "mints": [
+  {
+   "mint": "58H2UJKDczeFJqcc5yUwigMg3vwgyLPVDt2droZ3shQM",
+   "sigs": 767,
+   "txs": 50,
+   "missing": 0
+  },
+  {
+   "mint": "9UguDNZUajdcK2YknKccLomHZF3GvA7J32TdJWBtVNCP",
+   "sigs": 1568,
+   "txs": 38,
+   "missing": 0
+  },
+  {
+   "mint": "5cnJNnraScbABxe4usZAsk1fbJ7CYNyGDS1wGZH5dHDt",
+   "sigs": 1568,
+   "txs": 46,
+   "missing": 0
+  },
+  {
+   "mint": "GsVG7pTABDPPU2EbCJ9rDEvjDiBAkmuWhMEy4cgd6d2e",
+   "sigs": 2093,
+   "txs": 274,
+   "missing": 0
+  },
+  {
+   "mint": "FUJt4ZB74giJSV4wyGG44iVQLE2zRK87C8v2eREgSSBt",
+   "sigs": 1067,
+   "txs": 60,
+   "missing": 0
+  },
+  {
+   "mint": "91TQbp6knUSBxMA2xLyEboMBMpsnPRL7dupuLK9qH43g",
+   "sigs": 1639,
+   "txs": 58,
+   "missing": 0
+  },
+  {
+   "mint": "3CBb942x8Rb28mBChd3QZ81cLGCfCh8dvZDpUH4Sft19",
+   "sigs": 6642,
+   "txs": 300,
+   "missing": 0
+  },
+  {
+   "mint": "EzeMWQZpqj1nbRnEnYqgm5JPV1fdSHgkiuDKTcW6wPhT",
+   "sigs": 2183,
+   "txs": 102,
+   "missing": 0
+  },
+  {
+   "mint": "AscT87kfUWEDdGWYiS3JxzLu9DkpdgCQFgQuHNDS5oWY",
+   "sigs": 4640,
+   "txs": 300,
+   "missing": 0
+  },
+  {
+   "mint": "6rnGHULsARf9kSKnCD9PVKxHxdZoudK8MxnKg84LMEfD",
+   "sigs": 3281,
+   "txs": 114,
+   "missing": 0
+  },
+  {
+   "mint": "QgrY4NEqpQmcumRMN1NqhtgjhvG3696MqARGoRogvAh",
+   "sigs": 2203,
+   "txs": 46,
+   "missing": 0
+  },
+  {
+   "mint": "FKsa5RrLNjE6MoBFCc92urVSapGZvi9amTSLcGtTYLtv",
+   "sigs": 1953,
+   "txs": 45,
+   "missing": 0
+  },
+  {
+   "mint": "558iWWqmhj3Ra3hGxerUw9xw7Wu3G1ew2Z6x7pYmpiTQ",
+   "sigs": 7418,
+   "txs": 300,
+   "missing": 0
+  },
+  {
+   "mint": "6R3UaQWbC62kL6xDNbMQhCFitcPqKzoKVRomZA9aN8Ja",
+   "sigs": 2089,
+   "txs": 74,
+   "missing": 0
+  },
+  {
+   "mint": "FVMCRsCXuwS17Qo7ykc4x33TKARA44TZNHh8NYP9y3x8",
+   "sigs": 1567,
+   "txs": 102,
+   "missing": 0
+  },
+  {
+   "mint": "7eWaunDQXKsh522uE55hTJwUXySiHEoMogoyPApJj2b",
+   "sigs": 2598,
+   "txs": 79,
+   "missing": 0
+  },
+  {
+   "mint": "DUSjRYSQSkSwVh3x3LoZ5HAzxs1Qr9UqmPV5KtESJh2b",
+   "sigs": 2409,
+   "txs": 78,
+   "missing": 0
+  },
+  {
+   "mint": "5EYhu4prT67Yy6ZA4S4HByFXtC9XZ17tx7upiNh87FiZ",
+   "sigs": 2115,
+   "txs": 66,
+   "missing": 0
+  },
+  {
+   "mint": "GQL9vemU9pc2i3qTMyCsaYK7myQvcJwnYEEJKd8NrURL",
+   "sigs": 1966,
+   "txs": 57,
+   "missing": 0
+  },
+  {
+   "mint": "FQkWxmba5rbKDygbmpb4qEwrYHQgCeAevvajpGS2ibzT",
+   "sigs": 1888,
+   "txs": 52,
+   "missing": 0
+  },
+  {
+   "mint": "CrtCLM2CUDaU9XbenLUzFPXa7g1mRgK9eegVgY8jmUKn",
+   "sigs": 975,
+   "txs": 48,
+   "missing": 0
+  },
+  {
+   "mint": "H6mxJfnmVU1AHiyyStVTNSoDyMLX5cJVDsiWhUs1wGk5",
+   "sigs": 2740,
+   "txs": 175,
+   "missing": 0
+  },
+  {
+   "mint": "Am4u2v4pLM7EaWry9L1XiQN3uPcWVo492NCCZ9Ff2pjg",
+   "sigs": 2002,
+   "txs": 49,
+   "missing": 0
+  },
+  {
+   "mint": "6wBy1Rcm7DUCwjQ3ndge4ZBiujmHje9uM5cW76rcDAMF",
+   "sigs": 2769,
+   "txs": 103,
+   "missing": 0
+  },
+  {
+   "mint": "CxFj8JPnHh5uVEEoQTvUqdEWjkCEnpNhvG4gbpTg8ezV",
+   "sigs": 1092,
+   "txs": 30,
+   "missing": 0
+  },
+  {
+   "mint": "CBPNXPhqzvWviiUhoRx2DC8hzKMBHG3iPzqZn24LjKWE",
+   "sigs": 2149,
+   "txs": 56,
+   "missing": 0
+  },
+  {
+   "mint": "2k98MopXhD2vcGacZ5haNS1A7Xds3CH8upQqemBTZ9fU",
+   "sigs": 5694,
+   "txs": 300,
+   "missing": 0
+  },
+  {
+   "mint": "GaTFo3YjshE6SGiPhkVR54K9VGpTkfUsuhp1fbw1azLw",
+   "sigs": 997,
+   "txs": 33,
+   "missing": 0
+  },
+  {
+   "mint": "A8GHcsRLmN3hSVmPnoUzgRpZ6uEqD9i5emyu36d7bg6A",
+   "sigs": 2142,
+   "txs": 79,
+   "missing": 0
+  },
+  {
+   "mint": "Euuvu19MWieATUgp7UXpdVQyivdu5yeqzemFPz72qSYr",
+   "sigs": 3681,
+   "txs": 300,
+   "missing": 0
+  },
+  {
+   "mint": "EzgXvbw98Bn9UsnvHva9TbTGhx7YZXzj4PuAYS93u6sC",
+   "sigs": 190,
+   "txs": 17,
+   "missing": 0
+  },
+  {
+   "mint": "E8cNtLzYwWCW8F9kvLC6TQnqzkHjQME6Q9pHgZzCjp8Y",
+   "sigs": 1098,
+   "txs": 49,
+   "missing": 0
+  },
+  {
+   "mint": "6qdA7B5d5rcyxK5rJ5PUfvbztLfcavq48xasGBzEstwi",
+   "sigs": 1728,
+   "txs": 55,
+   "missing": 0
+  },
+  {
+   "mint": "3nMqvbq4gHYfsTRh44fQaHNKkpsTnP5ntuW9AxaN4Lnb",
+   "sigs": 8055,
+   "txs": 300,
+   "missing": 0
+  },
+  {
+   "mint": "3poudtD18uAC4YJmwebEmiR98cWRS9sjuQrapRwekTf1",
+   "sigs": 2682,
+   "txs": 91,
+   "missing": 0
+  },
+  {
+   "mint": "CygxzfHDkJX1ASPCkR23wwKMe6X4zT7Z3KJChPbxMykT",
+   "sigs": 4075,
+   "txs": 129,
+   "missing": 0
+  },
+  {
+   "mint": "6CyHvBbAWtJFjYCMQEZKNbwJ2bm4ZRiev4u7L3yQqkJg",
+   "sigs": 3500,
+   "txs": 104,
+   "missing": 0
+  },
+  {
+   "mint": "J7c3pnS4PKQW8iNhz2djNmdHYsYCFGsFCGBGqCwQfC6t",
+   "sigs": 2279,
+   "txs": 75,
+   "missing": 0
+  },
+  {
+   "mint": "9FJhXehA2cJ9v3zYWrL4scopszWA4HkAxuVYzZDFXW1w",
+   "sigs": 2879,
+   "txs": 89,
+   "missing": 0
+  },
+  {
+   "mint": "AgqZkkB6Ng3WaiMoMnJkNQmAs8WFohG3J3VeQUN8urAG",
+   "sigs": 1032,
+   "txs": 37,
+   "missing": 0
+  }
+ ],
+ "finishedAt": "2026-09-27T06:48:50.676Z",
+ "endpointStats": [
+  {
+   "url": "https://api.mainnet-beta.solana.com",
+   "ok": 322,
+   "err": 33,
+   "okBy": {
+    "getSignaturesForAddress": 19,
+    "getTransaction": 288,
+    "getBlock": 15
+   },
+   "hardErr": {
+    "getSignaturesForAddress": 0,
+    "getTransaction": 0,
+    "getBlock": 0
+   },
+   "bad": [],
+   "interval": 540.9015891886211
+  },
+  {
+   "url": "https://solana-rpc.publicnode.com",
+   "ok": 7263,
+   "err": 25,
+   "okBy": {
+    "getSignaturesForAddress": 122,
+    "getTransaction": 6996,
+    "getBlock": 145
+   },
+   "hardErr": {
+    "getSignaturesForAddress": 0,
+    "getTransaction": 0,
+    "getBlock": 0
+   },
+   "bad": [],
+   "interval": 83.33333333333333
+  }
+ ],
+ "errLog": {
+  "https://api.mainnet-beta.solana.com getTransaction": [
+   "429 429 Too many requests for a specific RPC call"
+  ],
+  "https://solana-rpc.publicnode.com getTransaction": [
+   "429 -32005 Rate limit exceeded. To obtain higher limits, please request a personal token or a dedicated node: https://www.al"
+  ],
+  "https://solana-rpc.publicnode.com getBlock": [
+   "429 -32005 Rate limit exceeded. To obtain higher limits, please request a personal token or a dedicated node: https://www.al"
+  ]
+ }
+}
