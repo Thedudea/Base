@@ -32,11 +32,12 @@ node -v   # باید v22 باشد
 
 ### ۲. گرفتن کد و نصب
 ```bash
-git clone https://github.com/Thedudea/Base.git
-cd Base && git checkout claude/beautiful-mccarthy-d1pizl
+git clone --filter=blob:none --sparse -b claude/beautiful-mccarthy-d1pizl https://github.com/Thedudea/Base.git
+cd Base && git sparse-checkout set pumpscan/bot pumpscan/analysis pumpscan/scan pumpscan/results
 cd pumpscan/bot
 npm install
 ```
+این روش حدود ۷۰۰ مگابایت داده‌ی خام اسکنر را دانلود نمی‌کند. راهنمای کامل پروژه در `pumpscan/HANDOFF.md` است.
 اگر ریپو private است، `git clone` نام کاربری GitHub و یک Personal Access Token می‌خواهد.
 
 ### ۳. ساخت کلید و گرفتن API Key از GMGN
