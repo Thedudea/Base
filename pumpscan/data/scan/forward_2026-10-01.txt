@@ -1,0 +1,148 @@
+data until 10-01 09:50 UTC
+
+F0 baseline: every tradable token (liq>=5K, vol24h>=10K)  (frozen 09-28 09:30; )
+/home/user/Base/pumpscan/analysis/explore.py:245: RuntimeWarning: divide by zero encountered in scalar divide
+  r = P[m] / pe
+   half@2x trail35 sl35     6h  n=7451 mean=-20.3% med= -7.6% win= 25% trim95=-32.3% total=-1515.7u  maxDD -1515.7u
+                                +5min delay: mean -34.2% total -2205.8u | 6% cost: mean -23.3%   | 09-28: 3020 tr -464.6u  09-29: 2226 tr -435.1u  09-30: 1870 tr -499.9u  10-01: 335 tr -116.1u
+   half@1.5x trail30 sl30   2h  n=7802 mean=-16.2% med= -6.6% win= 26% trim95=-27.9% total=-1265.8u  maxDD -1271.6u
+                                +5min delay: mean -30.9% total -2099.5u | 6% cost: mean -19.2%   | 09-28: 3020 tr -341.1u  09-29: 2226 tr -371.3u  09-30: 1870 tr -411.0u  10-01: 686 tr -142.3u
+   trail40 sl40             6h  n=7451 mean=-27.0% med=-17.0% win= 20% trim95=-40.8% total=-2011.1u  maxDD -2011.1u
+                                +5min delay: mean -40.2% total -2597.0u | 6% cost: mean -30.0%   | 09-28: 3020 tr -612.7u  09-29: 2226 tr -605.5u  09-30: 1870 tr -652.6u  10-01: 335 tr -140.4u
+
+F1 fresh + traction (report of 09-28)  (frozen 09-28 09:30; age_h<6 & mc>=30000 & mc<300000 & liq>=50000 & vol24h>=50000 & wake>=2 & ch1h<50)
+   half@2x trail35 sl35     6h  n= 724 mean=-19.9% med= -4.1% win=  9% trim95=-27.1% total= -144.4u  maxDD -144.4u
+                                +5min delay: mean -19.8% total -143.5u | 6% cost: mean -22.9%   | 09-28: 176 tr -35.4u  09-29: 290 tr -59.6u  09-30: 214 tr -38.2u  10-01: 44 tr -11.2u
+   half@1.5x trail30 sl30   2h  n= 762 mean=-14.0% med= -4.1% win= 14% trim95=-19.2% total= -106.9u  maxDD -108.6u
+                                +5min delay: mean -14.0% total -106.7u | 6% cost: mean -17.0%   | 09-28: 176 tr -23.8u  09-29: 290 tr -46.3u  09-30: 214 tr -28.3u  10-01: 82 tr -8.4u
+   trail40 sl40             6h  n= 724 mean=-23.6% med= -4.1% win=  6% trim95=-30.1% total= -171.1u  maxDD -171.1u
+                                +5min delay: mean -24.6% total -178.4u | 6% cost: mean -26.6%   | 09-28: 176 tr -45.3u  09-29: 290 tr -64.1u  09-30: 214 tr -50.0u  10-01: 44 tr -11.6u
+
+F2 fast momentum, big trades, early  (frozen 09-28 09:30; ch1h>=140 & avg_trade>=370 & ch24h<300 & mc<250000)
+   half@2x trail35 sl35     6h  n= 244 mean=+23.4% med= -3.5% win= 47% trim95= +1.4% total=  +57.0u  maxDD -7.4u
+                                +5min delay: mean -9.9% total -24.1u | 6% cost: mean +20.4%   | 09-28: 64 tr +11.4u  09-29: 118 tr +19.2u  09-30: 56 tr +25.6u  10-01: 6 tr +0.8u
+   half@1.5x trail30 sl30   2h  n= 265 mean=+28.6% med= -3.9% win= 46% trim95= +7.1% total=  +75.7u  maxDD -6.3u
+                                +5min delay: mean -5.1% total -13.6u | 6% cost: mean +25.6%   | 09-28: 64 tr +15.2u  09-29: 118 tr +17.5u  09-30: 56 tr +25.0u  10-01: 27 tr +18.1u
+   trail40 sl40             6h  n= 244 mean=+14.8% med= -5.3% win= 38% trim95=-13.7% total=  +36.0u  maxDD -12.6u
+                                +5min delay: mean -20.9% total -51.1u | 6% cost: mean +11.8%   | 09-28: 64 tr +8.1u  09-29: 118 tr +5.6u  09-30: 56 tr +21.6u  10-01: 6 tr +0.7u
+
+F3 deep liquidity, early, moving  (frozen 09-28 09:30; liq>=70000 & mc_high<160000 & ch1h>=140)
+   half@2x trail35 sl35     6h  n= 319 mean= +1.4% med= -2.6% win= 46% trim95=-15.9% total=   +4.4u  maxDD -10.6u
+                                +5min delay: mean -22.2% total -70.9u | 6% cost: mean -1.6%   | 09-28: 82 tr -0.2u  09-29: 141 tr +3.7u  09-30: 86 tr +5.2u  10-01: 10 tr -4.4u
+   half@1.5x trail30 sl30   2h  n= 338 mean= +7.2% med= -6.4% win= 43% trim95=-10.1% total=  +24.4u  maxDD -9.4u
+                                +5min delay: mean -15.3% total -51.7u | 6% cost: mean +4.2%   | 09-28: 82 tr +1.0u  09-29: 141 tr +12.9u  09-30: 86 tr +9.1u  10-01: 29 tr +1.4u
+   trail40 sl40             6h  n= 319 mean=-17.5% med=-62.7% win= 31% trim95=-41.1% total=  -55.9u  maxDD -68.4u
+                                +5min delay: mean -37.8% total -120.4u | 6% cost: mean -20.5%   | 09-28: 82 tr -11.8u  09-29: 141 tr -32.8u  09-30: 86 tr -8.3u  10-01: 10 tr -3.0u
+
+F4 deep liquidity, early (GMGN fields only)  (frozen 09-28 09:30; liq>=70000 & mc_high<160000 & vol24h>=70000 & tx24h<900)
+   half@2x trail35 sl35     6h  n= 200 mean=+30.9% med= +3.8% win= 54% trim95=+15.5% total=  +61.9u  maxDD -3.4u
+                                +5min delay: mean +5.3% total +9.5u | 6% cost: mean +28.0%   | 09-28: 69 tr +7.4u  09-29: 87 tr +30.0u  09-30: 41 tr +22.1u  10-01: 3 tr +2.4u
+   half@1.5x trail30 sl30   2h  n= 211 mean=+32.3% med=+11.8% win= 59% trim95=+16.7% total=  +68.2u  maxDD -3.1u
+                                +5min delay: mean +8.5% total +16.0u | 6% cost: mean +29.3%   | 09-28: 69 tr +6.9u  09-29: 87 tr +28.0u  09-30: 41 tr +22.9u  10-01: 14 tr +10.4u
+   trail40 sl40             6h  n= 200 mean=+19.5% med= -3.6% win= 46% trim95= -0.5% total=  +39.0u  maxDD -6.7u
+                                +5min delay: mean +1.1% total +1.9u | 6% cost: mean +16.5%   | 09-28: 69 tr +0.2u  09-29: 87 tr +16.5u  09-30: 41 tr +18.5u  10-01: 3 tr +3.8u
+
+F5 big trades + buy pressure, early  (frozen 09-28 09:30; avg_trade>=370 & buy_ratio1h>=0.6 & mc_high<160000 & vol5m>=13000)
+   half@2x trail35 sl35     6h  n= 376 mean=-11.0% med=-14.9% win= 37% trim95=-29.7% total=  -41.5u  maxDD -62.2u
+                                +5min delay: mean -31.4% total -118.2u | 6% cost: mean -14.0%   | 09-28: 99 tr +17.6u  09-29: 166 tr -28.9u  09-30: 96 tr -18.7u  10-01: 15 tr -11.6u
+   half@1.5x trail30 sl30   2h  n= 403 mean= +9.0% med= -4.4% win= 43% trim95=-10.9% total=  +36.4u  maxDD -19.5u
+                                +5min delay: mean -16.1% total -64.8u | 6% cost: mean +6.0%   | 09-28: 99 tr +30.4u  09-29: 166 tr -1.6u  09-30: 96 tr +4.8u  10-01: 42 tr +2.8u
+   trail40 sl40             6h  n= 376 mean=-21.9% med=-103.0% win= 26% trim95=-47.0% total=  -82.3u  maxDD -96.4u
+                                +5min delay: mean -41.6% total -156.3u | 6% cost: mean -24.9%   | 09-28: 99 tr +9.9u  09-29: 166 tr -49.7u  09-30: 96 tr -32.1u  10-01: 15 tr -10.4u
+
+F6 just migrated / first minutes (speed game)  (frozen 09-28 09:30; liq>=57000 & tx24h<270 & vol24h>=76000 & mc<1.3e+06)
+   half@2x trail35 sl35     6h  n= 296 mean=+20.1% med= -3.8% win= 35% trim95= +1.7% total=  +59.6u  maxDD -2.7u
+                                +5min delay: mean +6.9% total +18.5u | 6% cost: mean +17.1%   | 09-28: 83 tr +14.0u  09-29: 121 tr +15.4u  09-30: 79 tr +29.5u  10-01: 13 tr +0.7u
+   half@1.5x trail30 sl30   2h  n= 322 mean=+18.9% med= -3.7% win= 37% trim95= +1.3% total=  +60.8u  maxDD -2.5u
+                                +5min delay: mean +7.5% total +21.9u | 6% cost: mean +15.9%   | 09-28: 83 tr +18.5u  09-29: 121 tr +13.2u  09-30: 79 tr +23.6u  10-01: 39 tr +5.6u
+   trail40 sl40             6h  n= 296 mean=+14.9% med= -3.9% win= 29% trim95= -6.9% total=  +44.1u  maxDD -7.2u
+                                +5min delay: mean +3.3% total +8.9u | 6% cost: mean +11.9%   | 09-28: 83 tr +9.2u  09-29: 121 tr +1.8u  09-30: 79 tr +31.5u  10-01: 13 tr +1.6u
+
+F7 old-report revival preset (expected to lose; control)  (frozen 09-28 09:30; age_h>=24 & age_h<336 & mc>=50000 & mc<1e+07 & liq>=30000 & vol24h>=50000)
+   half@2x trail35 sl35     6h  n= 443 mean=-13.9% med= -4.1% win= 14% trim95=-17.1% total=  -61.7u  maxDD -62.8u
+                                +5min delay: mean -16.8% total -40.4u | 6% cost: mean -16.9%   | 09-28: 178 tr -31.3u  09-29: 133 tr -17.5u  09-30: 116 tr -12.8u  10-01: 16 tr -0.1u
+   half@1.5x trail30 sl30   2h  n= 459 mean= -9.4% med= -3.8% win= 16% trim95=-12.0% total=  -43.0u  maxDD -43.0u
+                                +5min delay: mean -10.7% total -26.2u | 6% cost: mean -12.4%   | 09-28: 178 tr -21.7u  09-29: 133 tr -12.1u  09-30: 116 tr -7.7u  10-01: 32 tr -1.5u
+   trail40 sl40             6h  n= 443 mean=-14.9% med= -4.1% win= 13% trim95=-17.7% total=  -66.0u  maxDD -66.4u
+                                +5min delay: mean -19.2% total -46.1u | 6% cost: mean -17.9%   | 09-28: 178 tr -31.8u  09-29: 133 tr -20.0u  09-30: 116 tr -13.3u  10-01: 16 tr -0.9u
+
+P0 buy at the DEX-paid moment (all)  (frozen 09-29 10:00; paid_min<=10)
+   half@2x trail35 sl35     6h  n= 956 mean=-12.8% med=-46.3% win= 25% trim95=-28.8% total= -122.4u  maxDD -138.7u
+                                +5min delay: mean -15.0% total -136.8u | 6% cost: mean -15.8%   | 09-29: 370 tr -67.2u  09-30: 507 tr -59.2u  10-01: 79 tr +4.0u
+   half@1.5x trail30 sl30   2h  n=1017 mean=-12.4% med=-38.8% win= 29% trim95=-26.3% total= -125.8u  maxDD -127.7u
+                                +5min delay: mean -12.7% total -124.1u | 6% cost: mean -15.4%   | 09-29: 370 tr -71.3u  09-30: 507 tr -44.1u  10-01: 140 tr -10.4u
+   trail40 sl40             6h  n= 956 mean=-20.8% med=-46.8% win= 19% trim95=-39.5% total= -199.2u  maxDD -203.9u
+                                +5min delay: mean -20.5% total -187.3u | 6% cost: mean -23.8%   | 09-29: 370 tr -100.2u  09-30: 507 tr -95.4u  10-01: 79 tr -3.6u
+
+P1 DEX-paid moment, Robinhood Chain  (frozen 09-29 10:00; paid_min<=10 & is_sol<0.5)
+   half@2x trail35 sl35     6h  n= 175 mean=+29.3% med=-40.7% win= 41% trim95= +6.0% total=  +51.2u  maxDD -8.2u
+                                +5min delay: mean +12.3% total +21.4u | 6% cost: mean +26.3%   | 09-29: 78 tr +5.4u  09-30: 86 tr +34.5u  10-01: 11 tr +11.2u
+   half@1.5x trail30 sl30   2h  n= 182 mean=+24.1% med=-28.2% win= 42% trim95= +1.8% total=  +43.8u  maxDD -9.2u
+                                +5min delay: mean +11.3% total +20.4u | 6% cost: mean +21.1%   | 09-29: 78 tr +2.8u  09-30: 86 tr +31.0u  10-01: 18 tr +10.0u
+   trail40 sl40             6h  n= 175 mean=+28.4% med=-32.9% win= 35% trim95= -2.3% total=  +49.6u  maxDD -7.5u
+                                +5min delay: mean +9.5% total +16.5u | 6% cost: mean +25.4%   | 09-29: 78 tr +7.7u  09-30: 86 tr +30.3u  10-01: 11 tr +11.7u
+
+P2 DEX-paid moment, token already >=6h old  (frozen 09-29 10:00; paid_min<=10 & age_h>=6)
+   half@2x trail35 sl35     6h  n=  61 mean= +7.5% med=-17.5% win= 38% trim95= -8.9% total=   +4.6u  maxDD -4.1u
+                                +5min delay: mean -5.5% total -3.4u | 6% cost: mean +4.5%   | 09-29: 31 tr +7.0u  09-30: 24 tr -2.6u  10-01: 6 tr +0.1u
+   half@1.5x trail30 sl30   2h  n=  65 mean= -6.9% med= -9.0% win= 34% trim95=-12.3% total=   -4.5u  maxDD -5.2u
+                                +5min delay: mean -6.1% total -4.0u | 6% cost: mean -9.9%   | 09-29: 31 tr -0.7u  09-30: 24 tr -2.3u  10-01: 10 tr -1.5u
+   trail40 sl40             6h  n=  61 mean=-18.3% med=-20.3% win= 25% trim95=-23.6% total=  -11.2u  maxDD -11.6u
+                                +5min delay: mean -19.6% total -11.9u | 6% cost: mean -21.3%   | 09-29: 31 tr -5.6u  09-30: 24 tr -5.6u  10-01: 6 tr +0.1u
+
+P3 DEX-paid moment, MC >= 300K  (frozen 09-29 10:00; paid_min<=10 & mc>=300000)
+   half@2x trail35 sl35     6h  n=  70 mean= -0.9% med=-40.5% win= 34% trim95=-12.8% total=   -0.6u  maxDD -8.8u
+                                +5min delay: mean -7.4% total -5.2u | 6% cost: mean -3.9%   | 09-29: 27 tr -7.8u  09-30: 35 tr +5.0u  10-01: 8 tr +2.2u
+   half@1.5x trail30 sl30   2h  n=  73 mean= +3.3% med=-35.3% win= 38% trim95=-10.2% total=   +2.4u  maxDD -5.6u
+                                +5min delay: mean -2.0% total -1.5u | 6% cost: mean +0.3%   | 09-29: 27 tr -4.7u  09-30: 35 tr +5.4u  10-01: 11 tr +1.7u
+   trail40 sl40             6h  n=  70 mean= -9.8% med=-41.5% win= 33% trim95=-25.8% total=   -6.9u  maxDD -10.0u
+                                +5min delay: mean -14.2% total -9.9u | 6% cost: mean -12.8%   | 09-29: 27 tr -8.4u  09-30: 35 tr +0.2u  10-01: 8 tr +1.3u
+
+Q2 F2 + DEX paid  (frozen 09-29 10:00; paid_min>=0 & ch1h>=140 & avg_trade>=370 & ch24h<300 & mc<250000)
+   half@2x trail35 sl35     6h  n=   9 mean=+217.9% med=+129.5% win= 89% trim95=+132.7% total=  +19.6u  maxDD -1.0u
+                                +5min delay: mean +109.1% total +9.8u | 6% cost: mean +215.3%   | 09-29: 4 tr +7.0u  09-30: 5 tr +12.6u
+   half@1.5x trail30 sl30   2h  n=   9 mean=+192.1% med=+108.1% win= 89% trim95=+120.7% total=  +17.3u  maxDD -0.3u
+                                +5min delay: mean +92.4% total +8.3u | 6% cost: mean +189.1%   | 09-29: 4 tr +5.4u  09-30: 5 tr +11.9u
+   trail40 sl40             6h  n=   9 mean=+232.6% med=+108.6% win= 89% trim95=+149.1% total=  +20.9u  maxDD -1.0u
+                                +5min delay: mean +145.6% total +13.1u | 6% cost: mean +229.9%   | 09-29: 4 tr +7.9u  09-30: 5 tr +13.0u
+
+Q3 F3 + DEX paid  (frozen 09-29 10:00; paid_min>=0 & liq>=70000 & mc_high<160000 & ch1h>=140)
+   half@2x trail35 sl35     6h  n=  13 mean=+207.2% med=+106.3% win= 85% trim95=+149.4% total=  +26.9u  maxDD -0.6u
+                                +5min delay: mean +114.4% total +14.9u | 6% cost: mean +204.4%   | 09-29: 6 tr +6.7u  09-30: 5 tr +18.6u  10-01: 2 tr +1.6u
+   half@1.5x trail30 sl30   2h  n=  13 mean=+177.5% med=+82.7% win= 85% trim95=+128.6% total=  +23.1u  maxDD -0.3u
+                                +5min delay: mean +97.8% total +12.7u | 6% cost: mean +174.5%   | 09-29: 6 tr +5.7u  09-30: 5 tr +15.8u  10-01: 2 tr +1.6u
+   trail40 sl40             6h  n=  13 mean=+229.8% med=+64.0% win= 77% trim95=+173.9% total=  +29.9u  maxDD -1.0u
+                                +5min delay: mean +129.7% total +16.9u | 6% cost: mean +227.0%   | 09-29: 6 tr +7.2u  09-30: 5 tr +19.9u  10-01: 2 tr +2.8u
+
+Q4 F4 + DEX paid  (frozen 09-29 10:00; paid_min>=0 & liq>=70000 & mc_high<160000 & vol24h>=70000 & tx24h<900)
+   half@2x trail35 sl35     6h  n=  11 mean=+195.6% med=+106.0% win= 82% trim95=+125.2% total=  +21.5u  maxDD -0.6u
+                                +5min delay: mean +111.3% total +12.2u | 6% cost: mean +192.9%   | 09-29: 6 tr +6.7u  09-30: 4 tr +12.6u  10-01: 1 tr +2.2u
+   half@1.5x trail30 sl30   2h  n=  11 mean=+170.7% med=+82.7% win= 91% trim95=+111.4% total=  +18.8u  maxDD -0.4u
+                                +5min delay: mean +104.2% total +11.5u | 6% cost: mean +167.7%   | 09-29: 6 tr +5.7u  09-30: 4 tr +11.1u  10-01: 1 tr +2.0u
+   trail40 sl40             6h  n=  11 mean=+217.9% med=+64.0% win= 82% trim95=+149.7% total=  +24.0u  maxDD -0.6u
+                                +5min delay: mean +139.6% total +15.4u | 6% cost: mean +215.2%   | 09-29: 6 tr +7.2u  09-30: 4 tr +13.4u  10-01: 1 tr +3.4u
+
+Q6 F6 + DEX paid  (frozen 09-29 10:00; paid_min>=0 & liq>=57000 & tx24h<270 & vol24h>=76000 & mc<1.3e+06)
+   half@2x trail35 sl35     6h  n=  11 mean=+203.1% med=+165.2% win= 64% trim95=+133.5% total=  +22.3u  maxDD -0.0u
+                                +5min delay: mean +173.2% total +13.9u | 6% cost: mean +200.4%   | 09-29: 3 tr +2.5u  09-30: 6 tr +16.0u  10-01: 2 tr +3.8u
+   half@1.5x trail30 sl30   2h  n=  12 mean=+176.2% med=+147.8% win= 67% trim95=+122.8% total=  +21.1u  maxDD -0.0u
+                                +5min delay: mean +154.1% total +13.9u | 6% cost: mean +173.2%   | 09-29: 3 tr +2.1u  09-30: 6 tr +14.3u  10-01: 3 tr +4.7u
+   trail40 sl40             6h  n=  11 mean=+247.5% med=+184.1% win= 64% trim95=+182.2% total=  +27.2u  maxDD -0.0u
+                                +5min delay: mean +224.9% total +18.0u | 6% cost: mean +244.7%   | 09-29: 3 tr +3.8u  09-30: 6 tr +18.7u  10-01: 2 tr +4.7u
+
+G1 deep pool, very early (walk-forward 09-29)  (frozen 09-29 11:00; liq>=44000 & mc_high<75000 & tx1h<96 & tx24h<160)
+   half@2x trail35 sl35     6h  n=  84 mean=+37.5% med= -4.1% win= 25% trim95=+11.4% total=  +31.5u  maxDD -1.2u
+                                +5min delay: mean +68.6% total +28.1u | 6% cost: mean +34.5%   | 09-29: 46 tr +9.7u  09-30: 37 tr +21.8u  10-01: 1 tr -0.0u
+   half@1.5x trail30 sl30   2h  n=  95 mean=+31.2% med= -4.0% win= 27% trim95=+10.4% total=  +29.6u  maxDD -1.0u
+                                +5min delay: mean +39.5% total +19.7u | 6% cost: mean +28.2%   | 09-29: 46 tr +12.5u  09-30: 37 tr +13.5u  10-01: 12 tr +3.6u
+   trail40 sl40             6h  n=  84 mean=+47.2% med= -4.1% win= 24% trim95=+14.2% total=  +39.6u  maxDD -1.2u
+                                +5min delay: mean +78.5% total +32.2u | 6% cost: mean +44.2%   | 09-29: 46 tr +14.3u  09-30: 37 tr +25.3u  10-01: 1 tr -0.0u
+
+G2 deep pool, early, busy (walk-forward 09-29)  (frozen 09-29 11:00; liq>=58000 & mc<490000 & tx24h<240 & vol24h>=110000)
+   half@2x trail35 sl35     6h  n= 112 mean= +5.4% med= -4.0% win= 21% trim95= -9.7% total=   +6.1u  maxDD -4.8u
+                                +5min delay: mean +1.3% total +1.1u | 6% cost: mean +2.4%   | 09-29: 47 tr +2.2u  09-30: 55 tr +2.3u  10-01: 10 tr +1.6u
+   half@1.5x trail30 sl30   2h  n= 128 mean= +0.4% med= -3.9% win= 23% trim95= -9.9% total=   +0.5u  maxDD -6.5u
+                                +5min delay: mean +1.3% total +1.4u | 6% cost: mean -2.6%   | 09-29: 47 tr -0.7u  09-30: 55 tr -0.7u  10-01: 26 tr +1.8u
+   trail40 sl40             6h  n= 112 mean= +5.2% med= -4.0% win= 19% trim95=-12.6% total=   +5.8u  maxDD -4.8u
+                                +5min delay: mean +0.8% total +0.7u | 6% cost: mean +2.2%   | 09-29: 47 tr +0.5u  09-30: 55 tr +2.8u  10-01: 10 tr +2.5u
+

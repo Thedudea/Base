@@ -1,0 +1,85 @@
+[
+ {
+  "url": "https://api.mainnet-beta.solana.com",
+  "getSlot": {
+   "status": 200,
+   "ms": 173,
+   "result": 450918188
+  },
+  "getSigs": {
+   "status": 200,
+   "n": 5
+  },
+  "getTx": {
+   "status": 200,
+   "ok": true
+  }
+ },
+ {
+  "url": "https://solana-rpc.publicnode.com",
+  "getSlot": {
+   "status": 200,
+   "ms": 111,
+   "result": 450918186
+  },
+  "getSigs": {
+   "status": 200,
+   "n": 5
+  },
+  "getTx": {
+   "status": 200,
+   "ok": true
+  }
+ },
+ {
+  "url": "https://solana.drpc.org",
+  "getSlot": {
+   "status": 400,
+   "ms": 162,
+   "result": {
+    "message": "chain is not available on free plan, please upgrade to paid plan",
+    "code": 35
+   }
+  },
+  "getSigs": {
+   "status": 400,
+   "n": null,
+   "err": {
+    "message": "chain is not available on free plan, please upgrade to paid plan",
+    "code": 35
+   }
+  }
+ },
+ {
+  "url": "https://solana.api.onfinality.io/public",
+  "getSlot": {
+   "status": 429,
+   "ms": 237,
+   "result": {
+    "code": -32029,
+    "message": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit"
+   }
+  },
+  "getSigs": {
+   "status": 429,
+   "n": null,
+   "err": {
+    "code": -32029,
+    "message": "Too Many Requests, Please apply an OnFinality API key or contact us to receive a higher rate limit"
+   }
+  }
+ },
+ {
+  "url": "https://rpc.ankr.com/solana",
+  "getSlot": {
+   "status": 403,
+   "ms": 66,
+   "result": "message: API key is not allowed to access blockchain, json-rpc code: -32052, rest code: 403"
+  },
+  "getSigs": {
+   "status": 403,
+   "n": null,
+   "err": "message: API key is not allowed to access blockchain, json-rpc code: -32052, rest code: 403"
+  }
+ }
+]

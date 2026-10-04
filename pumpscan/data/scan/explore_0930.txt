@@ -1,0 +1,191 @@
+snapshots usable: 628243, tokens 15212, data 09-27 09:35 .. 09-30 09:52 UTC, train < 09-29 01:21 <= test
+
+baseline: every token, first time seen
+  half@2x trail35 sl35     2h  train n=4268 mean=-18.7% med= -7.4% win= 29% trim95=-32.1% total= -798.4u
+                               test  n=2727 mean=-18.8% med=-13.4% win= 31% trim95=-33.3% total= -511.3u
+  half@2x trail35 sl35     6h  train n=4268 mean=-22.9% med=-11.4% win= 28% trim95=-34.5% total= -975.5u
+                               test  n=2440 mean=-18.7% med=-14.7% win= 31% trim95=-32.4% total= -456.0u
+  half@1.5x trail30 sl30   2h  train n=4268 mean=-17.1% med= -9.9% win= 28% trim95=-29.3% total= -729.8u
+                               test  n=2727 mean=-17.5% med=-13.0% win= 30% trim95=-30.8% total= -478.5u
+  half@1.5x trail30 sl30   6h  train n=4268 mean=-20.8% med=-14.6% win= 26% trim95=-31.3% total= -885.7u
+                               test  n=2440 mean=-17.7% med=-15.0% win= 30% trim95=-30.1% total= -431.0u
+
+=== search: GMGN filter fields only | exit half@2x trail35 sl35 | hold 6h | 162 conditions ===
+  liq>=$44K & mc<$75K & tx24h<160.0 & vol24h>=$43K
+      train n=  54 mean=+72.9% med= +3.3% win= 50% trim95=+48.1% total=  +39.4u
+      TEST  n=  40 mean=+14.0% med=+11.9% win= 55% trim95= +2.4% total=   +5.6u   | +5min delay: n=  35 mean=-13.9% med= -4.1% win= 14% trim95=-27.3% total=   -4.9u | 6% cost: mean +11.0%
+  liq>=$44K & mc_high<$78K & tx24h<160.0 & vol24h>=$43K
+      train n=  57 mean=+71.6% med= -4.0% win= 49% trim95=+48.1% total=  +40.8u
+      TEST  n=  43 mean=+15.3% med=+10.6% win= 53% trim95= +1.7% total=   +6.6u   | +5min delay: n=  37 mean= -9.9% med= -4.1% win= 16% trim95=-22.4% total=   -3.7u | 6% cost: mean +12.3%
+  liq>=$44K & mc_high<$52K & tx24h<160.0 & vol24h<$26K
+      train n=  37 mean=+72.3% med=+31.9% win= 65% trim95=+40.1% total=  +26.8u
+      TEST  n=   9 mean=+34.5% med= -4.2% win= 44% trim95=+14.6% total=   +3.1u   | +5min delay: n=   7 mean=+44.5% med= +4.7% win= 57% trim95=+22.7% total=   +3.1u | 6% cost: mean +31.5%
+  age_h<1.2 & liq>=$44K & mc<$75K & tx24h<160.0
+      train n= 158 mean=+53.7% med=+38.3% win= 71% trim95=+32.2% total=  +84.9u
+      TEST  n=  85 mean=+36.3% med=+28.4% win= 67% trim95=+18.3% total=  +30.8u   | +5min delay: n=  85 mean= +9.5% med= -4.0% win= 35% trim95= -6.0% total=   +8.1u | 6% cost: mean +33.3%
+  age_h<2.8 & liq>=$44K & mc<$75K & tx24h<160.0
+      train n= 158 mean=+53.7% med=+38.3% win= 71% trim95=+32.2% total=  +84.9u
+      TEST  n=  87 mean=+36.6% med=+28.4% win= 68% trim95=+19.1% total=  +31.9u   | +5min delay: n=  87 mean=+10.4% med= -4.0% win= 36% trim95= -4.7% total=   +9.1u | 6% cost: mean +33.6%
+  age_h<6.9 & liq>=$44K & mc<$75K & tx24h<160.0
+      train n= 158 mean=+53.7% med=+38.3% win= 71% trim95=+32.2% total=  +84.9u
+      TEST  n=  87 mean=+36.6% med=+28.4% win= 68% trim95=+19.1% total=  +31.9u   | +5min delay: n=  87 mean=+10.4% med= -4.0% win= 36% trim95= -4.7% total=   +9.1u | 6% cost: mean +33.6%
+
+=== search: GMGN filter fields only | exit half@1.5x trail30 sl30 | hold 2h | 162 conditions ===
+  liq>=$44K & mc<$75K & tx24h<160.0 & vol24h>=$43K
+      train n=  54 mean=+67.0% med= +3.3% win= 50% trim95=+39.8% total=  +36.2u
+      TEST  n=  42 mean= +7.9% med= +9.1% win= 52% trim95= -1.7% total=   +3.3u   | +5min delay: n=  37 mean=-23.9% med= -4.1% win= 14% trim95=-32.0% total=   -8.8u | 6% cost: mean +4.9%
+  liq>=$44K & mc_high<$78K & tx24h<160.0 & vol24h>=$43K
+      train n=  57 mean=+65.4% med= -4.0% win= 49% trim95=+39.6% total=  +37.3u
+      TEST  n=  46 mean= +9.5% med= +5.4% win= 52% trim95= +0.8% total=   +4.4u   | +5min delay: n=  40 mean=-20.2% med= -4.1% win= 15% trim95=-27.4% total=   -8.1u | 6% cost: mean +6.5%
+  mc<$150K & mc>=$75K & tx24h<160.0 & vol24h>=$68K
+      train n=  30 mean=+75.7% med=+17.8% win= 57% trim95=+43.1% total=  +22.7u
+      TEST  n=  23 mean=+71.9% med=+27.5% win= 65% trim95=+26.9% total=  +16.5u   | +5min delay: n=  19 mean=+37.3% med= -3.7% win= 42% trim95=+18.8% total=   +7.1u | 6% cost: mean +68.9%
+  liq>=$57K & mc_high<$720K & tx24h<160.0 & vol24h>=$68K
+      train n=  39 mean=+69.0% med= -3.0% win= 46% trim95=+36.0% total=  +26.9u
+      TEST  n=  24 mean=+61.4% med=+20.1% win= 58% trim95=+17.5% total=  +14.7u   | +5min delay: n=  20 mean=+27.7% med= -3.8% win= 40% trim95= +9.7% total=   +5.5u | 6% cost: mean +58.4%
+  mc>=$75K & mc_high<$720K & tx24h<160.0 & vol24h>=$68K
+      train n=  43 mean=+63.6% med= -3.0% win= 47% trim95=+26.6% total=  +27.3u
+      TEST  n=  29 mean=+53.4% med=+12.7% win= 55% trim95=+17.0% total=  +15.5u   | +5min delay: n=  22 mean=+25.2% med= -3.8% win= 41% trim95= -5.3% total=   +5.5u | 6% cost: mean +50.4%
+  mc<$150K & mc_high>=$78K & tx24h<160.0 & vol24h>=$68K
+      train n=  33 mean=+65.4% med= +7.1% win= 52% trim95=+35.3% total=  +21.6u
+      TEST  n=  28 mean=+57.7% med= +4.4% win= 50% trim95=+20.3% total=  +16.2u   | +5min delay: n=  17 mean=+42.2% med= -3.6% win= 47% trim95=+21.7% total=   +7.2u | 6% cost: mean +54.7%
+
+=== search: GMGN filter fields only | exit trail40 sl40 | hold 6h | 162 conditions ===
+  liq>=$44K & mc<$75K & tx24h<160.0 & vol24h>=$43K
+      train n=  54 mean=+94.9% med= +0.6% win= 50% trim95=+57.2% total=  +51.2u
+      TEST  n=  40 mean=+18.2% med=+11.9% win= 55% trim95= +2.3% total=   +7.3u   | +5min delay: n=  35 mean= -9.7% med= -4.1% win= 14% trim95=-27.3% total=   -3.4u | 6% cost: mean +15.2%
+  liq>=$44K & mc_high<$78K & tx24h<160.0 & vol24h>=$43K
+      train n=  57 mean=+92.3% med= -4.0% win= 49% trim95=+56.6% total=  +52.6u
+      TEST  n=  43 mean=+19.8% med=+10.6% win= 53% trim95= +1.6% total=   +8.5u   | +5min delay: n=  37 mean= -6.5% med= -4.1% win= 16% trim95=-22.9% total=   -2.4u | 6% cost: mean +16.8%
+  age_h<1.2 & liq>=$44K & mc<$75K & tx24h<160.0
+      train n= 158 mean=+63.9% med=+35.3% win= 71% trim95=+34.5% total= +101.0u
+      TEST  n=  85 mean=+43.6% med=+26.7% win= 64% trim95=+17.2% total=  +37.0u   | +5min delay: n=  85 mean=+11.3% med= -4.0% win= 33% trim95=-10.4% total=   +9.6u | 6% cost: mean +40.6%
+  age_h<2.8 & liq>=$44K & mc<$75K & tx24h<160.0
+      train n= 158 mean=+63.9% med=+35.3% win= 71% trim95=+34.5% total= +101.0u
+      TEST  n=  87 mean=+43.8% med=+26.7% win= 64% trim95=+18.1% total=  +38.1u   | +5min delay: n=  87 mean=+12.2% med= -4.0% win= 33% trim95= -8.9% total=  +10.6u | 6% cost: mean +40.8%
+  age_h<6.9 & liq>=$44K & mc<$75K & tx24h<160.0
+      train n= 158 mean=+63.9% med=+35.3% win= 71% trim95=+34.5% total= +101.0u
+      TEST  n=  87 mean=+43.8% med=+26.7% win= 64% trim95=+18.1% total=  +38.1u   | +5min delay: n=  87 mean=+12.2% med= -4.0% win= 33% trim95= -8.9% total=  +10.6u | 6% cost: mean +40.8%
+  age_h<15.0 & liq>=$44K & mc<$75K & tx24h<160.0
+      train n= 158 mean=+63.9% med=+35.3% win= 71% trim95=+34.5% total= +101.0u
+      TEST  n=  87 mean=+43.8% med=+26.7% win= 64% trim95=+18.1% total=  +38.1u   | +5min delay: n=  87 mean=+12.2% med= -4.0% win= 33% trim95= -8.9% total=  +10.6u | 6% cost: mean +40.8%
+
+=== search: GMGN fields + what the Trending list shows | exit half@2x trail35 sl35 | hold 6h | 230 conditions ===
+  mc_high<$78K & mc_high>=$52K & tx24h<160.0 & vol1h>=$40K
+      train n=  42 mean=+85.7% med=+39.9% win= 67% trim95=+54.2% total=  +36.0u
+      TEST  n=  47 mean= +3.9% med=+17.1% win= 57% trim95= -5.7% total=   +1.8u   | +5min delay: n=  47 mean=-24.3% med= -4.3% win= 19% trim95=-36.1% total=  -11.4u | 6% cost: mean +0.9%
+  liq>=$44K & mc_high<$78K & tx24h<160.0 & vol1h>=$40K
+      train n=  58 mean=+78.1% med=+45.0% win= 78% trim95=+55.3% total=  +45.3u
+      TEST  n=  43 mean=+24.2% med=+25.4% win= 72% trim95=+11.1% total=  +10.4u   | +5min delay: n=  43 mean= -3.4% med= -4.1% win= 23% trim95=-18.4% total=   -1.5u | 6% cost: mean +21.2%
+  liq>=$44K & mc<$75K & tx24h<160.0 & vol1h>=$40K
+      train n=  57 mean=+76.8% med=+44.9% win= 77% trim95=+53.6% total=  +43.8u
+      TEST  n=  41 mean=+22.8% med=+25.4% win= 73% trim95= +8.9% total=   +9.3u   | +5min delay: n=  41 mean= -6.4% med= -4.1% win= 22% trim95=-22.4% total=   -2.6u | 6% cost: mean +19.8%
+  mc<$75K & mc_high>=$52K & tx24h<160.0 & vol1h>=$40K
+      train n=  45 mean=+80.4% med=+41.4% win= 67% trim95=+50.7% total=  +36.2u
+      TEST  n=  45 mean= +1.7% med=+17.1% win= 58% trim95= -8.4% total=   +0.8u   | +5min delay: n=  45 mean=-28.0% med= -4.4% win= 18% trim95=-39.6% total=  -12.6u | 6% cost: mean -1.3%
+  liq>=$44K & mc<$75K & tx24h<160.0 & vol24h>=$43K
+      train n=  54 mean=+72.9% med= +3.3% win= 50% trim95=+48.1% total=  +39.4u
+      TEST  n=  40 mean=+14.0% med=+11.9% win= 55% trim95= +2.4% total=   +5.6u   | +5min delay: n=  35 mean=-13.9% med= -4.1% win= 14% trim95=-27.3% total=   -4.9u | 6% cost: mean +11.0%
+  liq>=$44K & mc_high<$78K & tx24h<160.0 & vol24h>=$43K
+      train n=  57 mean=+71.6% med= -4.0% win= 49% trim95=+48.1% total=  +40.8u
+      TEST  n=  43 mean=+15.3% med=+10.6% win= 53% trim95= +1.7% total=   +6.6u   | +5min delay: n=  37 mean= -9.9% med= -4.1% win= 16% trim95=-22.4% total=   -3.7u | 6% cost: mean +12.3%
+
+=== search: GMGN fields + what the Trending list shows | exit half@1.5x trail30 sl30 | hold 2h | 230 conditions ===
+  liq>=$44K & mc_high<$78K & tx24h<160.0 & vol1h>=$40K
+      train n=  58 mean=+71.7% med=+44.7% win= 78% trim95=+46.8% total=  +41.6u
+      TEST  n=  49 mean=+33.3% med=+25.4% win= 69% trim95= +9.8% total=  +16.3u   | +5min delay: n=  49 mean= +0.4% med= -4.1% win= 24% trim95=-21.3% total=   +0.2u | 6% cost: mean +30.4%
+  liq>=$44K & mc<$75K & tx24h<160.0 & vol1h>=$40K
+      train n=  57 mean=+70.9% med=+44.0% win= 77% trim95=+45.4% total=  +40.4u
+      TEST  n=  46 mean=+33.1% med=+25.5% win= 70% trim95= +8.0% total=  +15.2u   | +5min delay: n=  46 mean= -1.2% med= -4.1% win= 24% trim95=-24.5% total=   -0.6u | 6% cost: mean +30.2%
+  liq>=$44K & mc_high<$140K & tx24h<160.0 & vol1h>=$40K
+      train n= 107 mean=+58.7% med=+36.3% win= 63% trim95=+32.1% total=  +62.8u
+      TEST  n=  83 mean=+43.9% med=+28.1% win= 73% trim95=+22.2% total=  +36.4u   | +5min delay: n=  83 mean= +7.6% med= -3.9% win= 34% trim95= -9.9% total=   +6.3u | 6% cost: mean +40.9%
+  liq<$57K & liq>=$44K & tx24h<160.0 & vol1h>=$40K
+      train n=  51 mean=+62.6% med=+42.9% win= 78% trim95=+35.3% total=  +31.9u
+      TEST  n=  45 mean=+12.1% med=+25.4% win= 71% trim95= +3.5% total=   +5.5u   | +5min delay: n=  45 mean=-20.2% med= -4.1% win= 20% trim95=-28.4% total=   -9.1u | 6% cost: mean +9.1%
+  liq>=$44K & mc<$150K & tx24h<160.0 & vol1h>=$40K
+      train n= 112 mean=+57.0% med=+35.0% win= 62% trim95=+31.5% total=  +63.8u
+      TEST  n=  83 mean=+43.9% med=+28.1% win= 73% trim95=+22.2% total=  +36.4u   | +5min delay: n=  83 mean= +7.6% med= -3.9% win= 34% trim95= -9.9% total=   +6.3u | 6% cost: mean +40.9%
+  liq<$95K & liq>=$44K & tx24h<160.0 & vol1h>=$40K
+      train n= 122 mean=+53.8% med=+34.3% win= 62% trim95=+25.4% total=  +65.6u
+      TEST  n=  86 mean=+47.8% med=+28.1% win= 72% trim95=+22.3% total=  +41.1u   | +5min delay: n=  86 mean=+11.5% med= -3.9% win= 34% trim95= -9.6% total=   +9.9u | 6% cost: mean +44.8%
+
+=== search: GMGN fields + what the Trending list shows | exit trail40 sl40 | hold 6h | 230 conditions ===
+  mc_high<$78K & mc_high>=$52K & tx24h<160.0 & vol1h>=$40K
+      train n=  42 mean=+113.7% med=+39.9% win= 67% trim95=+65.9% total=  +47.8u
+      TEST  n=  47 mean= +5.5% med=+17.1% win= 55% trim95= -7.0% total=   +2.6u   | +5min delay: n=  47 mean=-23.7% med= -4.3% win= 19% trim95=-35.1% total=  -11.2u | 6% cost: mean +2.5%
+  liq>=$44K & mc_high<$78K & tx24h<160.0 & vol1h>=$40K
+      train n=  58 mean=+98.8% med=+43.9% win= 78% trim95=+64.1% total=  +57.3u
+      TEST  n=  43 mean=+31.3% med=+25.4% win= 70% trim95=+11.8% total=  +13.5u   | +5min delay: n=  43 mean= -0.4% med= -4.1% win= 23% trim95=-18.8% total=   -0.2u | 6% cost: mean +28.3%
+  liq>=$44K & mc<$75K & tx24h<160.0 & vol1h>=$40K
+      train n=  57 mean=+98.0% med=+42.9% win= 77% trim95=+62.6% total=  +55.8u
+      TEST  n=  41 mean=+29.7% med=+25.4% win= 71% trim95= +9.1% total=  +12.2u   | +5min delay: n=  41 mean= -2.8% med= -4.1% win= 22% trim95=-22.4% total=   -1.2u | 6% cost: mean +26.7%
+  mc<$75K & mc_high>=$52K & tx24h<160.0 & vol1h>=$40K
+      train n=  45 mean=+103.2% med=+32.6% win= 67% trim95=+58.0% total=  +46.4u
+      TEST  n=  45 mean= +2.9% med=+17.1% win= 56% trim95=-10.4% total=   +1.3u   | +5min delay: n=  45 mean=-27.0% med= -4.4% win= 18% trim95=-38.5% total=  -12.1u | 6% cost: mean -0.1%
+  liq>=$44K & mc<$75K & tx24h<160.0 & vol24h>=$43K
+      train n=  54 mean=+94.9% med= +0.6% win= 50% trim95=+57.2% total=  +51.2u
+      TEST  n=  40 mean=+18.2% med=+11.9% win= 55% trim95= +2.3% total=   +7.3u   | +5min delay: n=  35 mean= -9.7% med= -4.1% win= 14% trim95=-27.3% total=   -3.4u | 6% cost: mean +15.2%
+  liq>=$44K & mc_high<$78K & tx24h<160.0 & vol24h>=$43K
+      train n=  57 mean=+92.3% med= -4.0% win= 49% trim95=+56.6% total=  +52.6u
+      TEST  n=  43 mean=+19.8% med=+10.6% win= 53% trim95= +1.6% total=   +8.5u   | +5min delay: n=  37 mean= -6.5% med= -4.1% win= 16% trim95=-22.9% total=   -2.4u | 6% cost: mean +16.8%
+
+=== search: all features | exit half@2x trail35 sl35 | hold 6h | 488 conditions ===
+  buyer_ratio>=0.84 & buyers1h<7.0 & mc<$75K & tx24h<160.0
+      train n=  30 mean=+129.6% med=+87.8% win= 77% trim95=+87.5% total=  +38.9u
+      TEST  n=  20 mean=+83.7% med=+14.5% win= 55% trim95=+65.7% total=  +16.7u   | +5min delay: n=  20 mean=+36.7% med= -4.3% win= 40% trim95=+20.3% total=   +7.3u | 6% cost: mean +80.7%
+  buyers1h<7.0 & liq<$57K & liq_mc>=0.71 & tx24h<160.0
+      train n=  34 mean=+124.3% med=+83.8% win= 71% trim95=+87.1% total=  +42.3u
+      TEST  n=  23 mean=+39.5% med= -4.2% win= 48% trim95=+19.0% total=   +9.1u   | +5min delay: n=  23 mean=-13.9% med= -4.6% win= 30% trim95=-23.0% total=   -3.2u | 6% cost: mean +36.5%
+  buy_ratio1h>=0.55 & buyers1h<7.0 & liq<$57K & tx24h<160.0
+      train n=  31 mean=+125.1% med=+72.7% win= 71% trim95=+84.1% total=  +38.8u
+      TEST  n=  24 mean=+33.6% med=+10.6% win= 54% trim95=+12.8% total=   +8.1u   | +5min delay: n=  24 mean= +0.6% med= -4.3% win= 42% trim95=-12.9% total=   +0.2u | 6% cost: mean +30.6%
+  buyers1h<7.0 & liq_mc<1.1 & mc<$75K & tx24h<160.0
+      train n=  34 mean=+119.1% med=+71.7% win= 74% trim95=+81.7% total=  +40.5u
+      TEST  n=  23 mean=+58.9% med= +8.2% win= 52% trim95=+31.4% total=  +13.5u   | +5min delay: n=  23 mean=+20.4% med= -4.4% win= 39% trim95= -3.5% total=   +4.7u | 6% cost: mean +55.9%
+  buyers1h<7.0 & liq_mc<1.1 & mc_high<$78K & tx24h<160.0
+      train n=  33 mean=+119.9% med=+70.6% win= 73% trim95=+81.3% total=  +39.6u
+      TEST  n=  22 mean=+54.2% med= +2.0% win= 50% trim95=+24.9% total=  +11.9u   | +5min delay: n=  22 mean=+13.1% med= -4.4% win= 36% trim95=-12.7% total=   +2.9u | 6% cost: mean +51.2%
+  avg_trade>=$0.35K & ch6h<140.0 & mc_high<$78K & tx24h<160.0
+      train n=  53 mean=+108.5% med=+51.2% win= 55% trim95=+78.0% total=  +57.5u
+      TEST  n=  37 mean=+49.7% med= -4.1% win= 46% trim95=+21.9% total=  +18.4u   | +5min delay: n=  34 mean=+27.5% med= -4.1% win= 38% trim95=+10.8% total=   +9.3u | 6% cost: mean +46.7%
+
+=== search: all features | exit half@1.5x trail30 sl30 | hold 2h | 488 conditions ===
+  avg_trade>=$0.35K & ch24h<130.0 & ch24h>=2.9 & mc_high<$52K
+      train n=  34 mean=+119.8% med=+44.1% win= 59% trim95=+71.1% total=  +40.7u
+      TEST  n=  16 mean=+76.9% med= -3.3% win= 44% trim95=+35.1% total=  +12.3u   | +5min delay: n=  15 mean=+35.7% med= -4.3% win= 40% trim95=+24.0% total=   +5.4u | 6% cost: mean +73.9%
+  accel>=2.0 & avg_trade>=$0.35K & ch6h<140.0 & mc_high<$52K
+      train n=  35 mean=+118.4% med=+51.2% win= 54% trim95=+71.1% total=  +41.5u
+      TEST  n=  19 mean=+61.1% med= -4.4% win= 42% trim95=+25.4% total=  +11.6u   | +5min delay: n=  17 mean=+29.2% med= -4.4% win= 35% trim95=+18.6% total=   +5.0u | 6% cost: mean +58.1%
+  accel>=2.0 & avg_trade>=$0.35K & ch24h<130.0 & mc_high<$52K
+      train n=  35 mean=+118.4% med=+51.2% win= 54% trim95=+71.1% total=  +41.5u
+      TEST  n=  18 mean=+65.7% med= -4.4% win= 44% trim95=+28.2% total=  +11.8u   | +5min delay: n=  16 mean=+32.3% med= -4.4% win= 38% trim95=+21.2% total=   +5.2u | 6% cost: mean +62.7%
+  accel>=0.66 & avg_trade>=$0.35K & ch6h<140.0 & mc_high<$52K
+      train n=  37 mean=+111.9% med=+13.2% win= 54% trim95=+66.8% total=  +41.4u
+      TEST  n=  19 mean=+61.1% med= -4.4% win= 42% trim95=+25.4% total=  +11.6u   | +5min delay: n=  17 mean=+29.2% med= -4.4% win= 35% trim95=+18.6% total=   +5.0u | 6% cost: mean +58.1%
+  accel>=0.66 & avg_trade>=$0.35K & ch24h<130.0 & mc_high<$52K
+      train n=  37 mean=+111.9% med=+13.2% win= 54% trim95=+66.8% total=  +41.4u
+      TEST  n=  18 mean=+65.7% med= -4.4% win= 44% trim95=+28.2% total=  +11.8u   | +5min delay: n=  16 mean=+32.3% med= -4.4% win= 38% trim95=+21.2% total=   +5.2u | 6% cost: mean +62.7%
+  accel>=1.0 & avg_trade>=$0.35K & ch6h<140.0 & mc_high<$52K
+      train n=  37 mean=+111.2% med= +4.9% win= 51% trim95=+66.1% total=  +41.1u
+      TEST  n=  19 mean=+61.1% med= -4.4% win= 42% trim95=+25.4% total=  +11.6u   | +5min delay: n=  17 mean=+29.2% med= -4.4% win= 35% trim95=+18.6% total=   +5.0u | 6% cost: mean +58.1%
+
+=== search: all features | exit trail40 sl40 | hold 6h | 488 conditions ===
+  avg_trade>=$0.35K & liq>=$44K & mc<$75K & tx24h<160.0
+      train n=  50 mean=+134.2% med=+43.3% win= 62% trim95=+90.0% total=  +67.1u
+      TEST  n=  42 mean=+71.7% med=+21.2% win= 60% trim95=+32.1% total=  +30.1u   | +5min delay: n=  40 mean=+32.3% med= -4.0% win= 35% trim95=+10.7% total=  +12.9u | 6% cost: mean +68.7%
+  buyers1h<7.0 & liq<$57K & liq>=$27K & tx24h<160.0
+      train n=  30 mean=+146.2% med=+67.5% win= 67% trim95=+92.3% total=  +43.9u
+      TEST  n=  26 mean=+48.6% med= +5.8% win= 54% trim95=+24.0% total=  +12.6u   | +5min delay: n=  26 mean= +1.6% med= -2.5% win= 46% trim95=-17.1% total=   +0.4u | 6% cost: mean +45.6%
+  avg_trade>=$0.35K & ch6h<140.0 & mc_high<$78K & tx24h<160.0
+      train n=  53 mean=+127.5% med=+26.6% win= 55% trim95=+89.4% total=  +67.6u
+      TEST  n=  37 mean=+78.9% med= -4.1% win= 43% trim95=+34.1% total=  +29.2u   | +5min delay: n=  34 mean=+36.4% med= -4.1% win= 35% trim95=+11.0% total=  +12.4u | 6% cost: mean +75.9%
+  buyers1h<7.0 & liq<$57K & liq_mc>=0.71 & tx24h<160.0
+      train n=  34 mean=+142.9% med=+71.1% win= 68% trim95=+95.6% total=  +48.6u
+      TEST  n=  23 mean=+33.7% med= -4.5% win= 39% trim95= +8.3% total=   +7.7u   | +5min delay: n=  23 mean=-16.6% med= -4.6% win= 30% trim95=-23.0% total=   -3.8u | 6% cost: mean +30.7%
+  buyer_ratio>=0.84 & buyers1h<7.0 & mc<$75K & tx24h<160.0
+      train n=  30 mean=+143.5% med=+61.8% win= 77% trim95=+89.5% total=  +43.1u
+      TEST  n=  20 mean=+78.7% med= +2.0% win= 50% trim95=+58.3% total=  +15.7u   | +5min delay: n=  20 mean=+30.8% med= -4.4% win= 35% trim95=+12.2% total=   +6.2u | 6% cost: mean +75.7%
+  avg_trade>=$0.35K & liq>=$44K & mc_high<$78K & tx24h<160.0
+      train n=  52 mean=+127.6% med=+39.9% win= 62% trim95=+84.8% total=  +66.3u
+      TEST  n=  45 mean=+67.4% med=+17.1% win= 58% trim95=+30.4% total=  +30.3u   | +5min delay: n=  43 mean=+29.9% med= -4.0% win= 35% trim95= +0.4% total=  +12.9u | 6% cost: mean +64.4%
