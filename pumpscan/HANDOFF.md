@@ -49,16 +49,19 @@
 | path | what |
 |---|---|
 | `pumpscan/HANDOFF.md` | this file |
+| `pumpscan/ROADMAP.md` | **roadmap**: history, current status, step-by-step checklist of what comes next — keep its checkboxes up to date |
+| `pumpscan/FILTERS.md` | **every filter** in plain words, its GMGN equivalent, and forward results per chain and per day |
 | `pumpscan/REPORT.md` | full Persian report, sections 1–13 (13 = final result) |
 | `pumpscan/bot/` | **the trading bot** (`bot.mjs`, `package.json`, `.env.example`, `README-fa.md` = setup guide in Persian) |
 | `pumpscan/scan/scanner.mjs` | market scanner (Node, no deps); `config.json` (now `enabled:false`); `run.sh` (GitHub Actions driver) |
 | `pumpscan/analysis/explore.py` | core: `Data` class (features per snapshot), trade simulator `sim()`, walk-forward beam search |
 | `pumpscan/analysis/forward.py` | scores `frozen_rules.json` only on data after each rule's `frozen_at` |
-| `pumpscan/analysis/frozen_rules.json` | all candidate filters (F0–F7, P0–P3, Q2–Q6, G1–G2, H4, H4P) with freeze times — **never edit old rules, add new ones** |
+| `pumpscan/analysis/frozen_rules.json` | all candidate filters (F0–F7, P0–P3, Q2–Q6, G1–G2, H4, H4P, R3, R5) with freeze times — **never edit old rules, add new ones** |
 | `pumpscan/analysis/paid.py` | "buy at DEX-paid moment" study |
-| `pumpscan/analysis/export_trades.py` | exports per-trade CSV of forward results |
+| `pumpscan/analysis/export_trades.py` | exports per-trade CSV of forward results (all rules by default) |
+| `pumpscan/analysis/rule_stats.py` | per-rule/per-chain/per-day tables from that CSV (no raw data needed, low RAM) |
 | `pumpscan/analysis/learn.py`, `pumps.py` | early (day-1) analyses; superseded by explore/forward |
-| `pumpscan/results/forward_trades.csv` | **every forward-test trade** of F2, F4, F6, G1, H4, H4P, P1, Q3, Q4, Q6 (token, time, MC, liq, vol, tx, dex_paid, rug, simulated returns incl. +5 min delay) — use to compare with live bot fills |
+| `pumpscan/results/forward_trades.csv` | **every forward-test trade** of all rules F0–H4P (token, time, MC, liq, vol, tx, dex_paid, rug, simulated returns incl. +5 min delay) — use to compare with live bot fills |
 | `pumpscan/data/scan/` | raw scanner data, **417 MB** (`YYYY-MM-DD/HHMM.ndjson.gz`, `schema.json`), plus all daily outputs `forward_*.txt`, `explore_*.txt`, `paid_*.txt` |
 | `pumpscan/data/v1-examples/` | first study of the 7 pumped tokens |
 | `pumpscan/fetch/` | one-off fetcher for the 7 example tokens |
@@ -243,6 +246,8 @@ Simulation constants are in `explore.py`:
 - `MIN_LIQ` $5K, `MIN_VOL24` $10K.
 
 ## 9. Next steps (agreed with the user)
+
+The detailed, checkbox version is `pumpscan/ROADMAP.md` (section ج). New finding of 10-04: split per chain, **F3 and F5 are profitable on Robinhood alone** (+183u / +194u, still positive with a 5-min delay), but that split was chosen after seeing the data, so they were frozen as **R3/R5** (2026-10-04 12:00 UTC) and must be confirmed on new scanner data before real money. See `FILTERS.md`.
 
 1. **On the server:** install Node 22, clone (sparse), `npm install` in `pumpscan/bot`, create the GMGN API key, then fill `.env`. See `pumpscan/bot/README-fa.md`.
 2. Run **DRY_RUN for at least a day**. Verify the signals match F4 and fix any JSON-path mismatches (section 7).
