@@ -1,2 +1,7 @@
 __pycache__/
 *.pyc
+pumpscan/bot/.env
+pumpscan/bot/node_modules/
+pumpscan/bot/state.json
+pumpscan/bot/state.json.tmp
+pumpscan/bot/trades.csv
